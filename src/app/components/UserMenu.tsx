@@ -7,6 +7,7 @@ interface Props {
   user: AuthUser;
   isDark: boolean;
   favoritesCount: number;
+  placesCount: number; // Tambahkan ini untuk menampilkan jumlah tempat
   onLogout: () => void;
 }
 
@@ -34,7 +35,7 @@ function getInitials(name: string): string {
     .toUpperCase();
 }
 
-export function UserMenu({ user, isDark, favoritesCount, onLogout }: Props) {
+export function UserMenu({ user, isDark, favoritesCount, placesCount, onLogout }: Props) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const avatarColor = stringToColor(user.id);
@@ -116,22 +117,23 @@ export function UserMenu({ user, isDark, favoritesCount, onLogout }: Props) {
 
               {/* Stats */}
               <div className="mt-3 flex gap-2">
-                <div
-                  className={`flex-1 text-center py-2 rounded-xl ${isDark ? "bg-neutral-800" : "bg-white border border-neutral-200"}`}
-                >
-                  <div className={`text-sm ${isDark ? "text-neutral-100" : "text-neutral-900"}`}>
+                {/* Menampilkan Jumlah Favorit */}
+                <div className={`flex-1 text-center py-2 rounded-xl ${isDark ? "bg-neutral-800" : "bg-white border border-neutral-200"}`}>
+                  <div className={`text-sm font-bold ${isDark ? "text-neutral-100" : "text-neutral-900"}`}>
                     {favoritesCount}
                   </div>
-                  <div className={`text-xs ${isDark ? "text-neutral-500" : "text-neutral-400"}`}>
+                  <div className={`text-[10px] ${isDark ? "text-neutral-500" : "text-neutral-400"}`}>
                     Favorit
                   </div>
                 </div>
-                <div
-                  className={`flex-1 text-center py-2 rounded-xl ${isDark ? "bg-neutral-800" : "bg-white border border-neutral-200"}`}
-                >
-                  <div className={`text-sm text-green-500`}>Aktif</div>
-                  <div className={`text-xs ${isDark ? "text-neutral-500" : "text-neutral-400"}`}>
-                    Status
+
+                {/* Menampilkan Jumlah Tempat (Ganti dari Status Aktif) */}
+                <div className={`flex-1 text-center py-2 rounded-xl ${isDark ? "bg-neutral-800" : "bg-white border border-neutral-200"}`}>
+                  <div className={`text-sm font-bold text-green-500`}>
+                    {placesCount}
+                  </div>
+                  <div className={`text-[10px] ${isDark ? "text-neutral-500" : "text-neutral-400"}`}>
+                    Tempat
                   </div>
                 </div>
               </div>
@@ -139,27 +141,6 @@ export function UserMenu({ user, isDark, favoritesCount, onLogout }: Props) {
 
             {/* Menu items */}
             <div className="p-2">
-              <button
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-sm transition-colors ${
-                  isDark ? "text-neutral-300 hover:bg-neutral-800" : "text-neutral-600 hover:bg-neutral-50"
-                }`}
-                onClick={() => setOpen(false)}
-              >
-                <User className="w-4 h-4 text-neutral-400" />
-                Profil Saya
-              </button>
-              <button
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-sm transition-colors ${
-                  isDark ? "text-neutral-300 hover:bg-neutral-800" : "text-neutral-600 hover:bg-neutral-50"
-                }`}
-                onClick={() => setOpen(false)}
-              >
-                <Shield className="w-4 h-4 text-neutral-400" />
-                Privasi & Data
-              </button>
-
-              <div className={`my-1.5 border-t ${isDark ? "border-neutral-800" : "border-neutral-100"}`} />
-
               <button
                 onClick={() => {
                   setOpen(false);

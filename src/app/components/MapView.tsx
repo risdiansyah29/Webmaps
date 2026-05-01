@@ -149,7 +149,7 @@ export function MapView({ places, selected, onSelect, isDark, userLoc, onLocate,
   // Fly to the selected place
   useEffect(() => {
     if (selected && mapRef.current) {
-      mapRef.current.flyTo([selected.lat, selected.lng], 9, { duration: 1.2 });
+      mapRef.current.flyTo([selected.lat, selected.lng], 18, { duration: 1.2 });
     }
   }, [selected]);
 

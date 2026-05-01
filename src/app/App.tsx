@@ -423,6 +423,7 @@ export default function App() {
             user={currentUser}
             isDark={isDark}
             favoritesCount={favorites.size}
+            placesCount={userPlaces.length} // Mengambil data dari state userPlaces yang sudah kita siapkan
             onLogout={handleLogout}
           />
         ) : (
@@ -505,8 +506,8 @@ export default function App() {
 
         {/* Min-rating filter */}
         <div className={`shrink-0 ml-auto flex items-center gap-1 pl-3 border-l ${isDark ? "border-neutral-800" : "border-neutral-200"}`}>
-          <span className={`text-xs ${isDark ? "text-neutral-400" : "text-neutral-500"}`}>Rating min</span>
-          {[0, 4, 4.5, 4.8].map((r) => (
+          {/* Array [0, 1, 2, 3, 4, 5] untuk mencakup semua level bintang */}
+          {[0, 1, 2, 3, 4, 5].map((r) => (
             <button
               key={r}
               onClick={() => setMinRating(r)}
@@ -518,7 +519,14 @@ export default function App() {
                     : "bg-white text-neutral-600 border-neutral-200"
               }`}
             >
-              {r === 0 ? "Semua" : <><Star className="w-3 h-3 fill-current" />{r}+</>}
+              {r === 0 ? (
+                "Semua"
+              ) : (
+                <>
+                  <Star className="w-3 h-3 fill-current" />
+                  {r}{r < 5 && "+"}
+                </>
+              )}
             </button>
           ))}
         </div>
