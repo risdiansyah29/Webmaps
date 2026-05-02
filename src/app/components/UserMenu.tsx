@@ -127,15 +127,7 @@ export function UserMenu({ user, isDark, favoritesCount, placesCount, onLogout }
                   </div>
                 </div>
 
-                {/* Menampilkan Jumlah Tempat (Ganti dari Status Aktif) */}
-                <div className={`flex-1 text-center py-2 rounded-xl ${isDark ? "bg-neutral-800" : "bg-white border border-neutral-200"}`}>
-                  <div className={`text-sm font-bold text-green-500`}>
-                    {placesCount}
-                  </div>
-                  <div className={`text-[10px] ${isDark ? "text-neutral-500" : "text-neutral-400"}`}>
-                    Tempat
-                  </div>
-                </div>
+            
               </div>
             </div>
 
