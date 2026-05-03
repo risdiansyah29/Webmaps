@@ -62,10 +62,10 @@ export default function LandingPage() {
     <main className="mx-auto w-full max-w-[1280px] px-6">
         {/* Hero */}
         <section className="pt-10">
-          <div className="relative overflow-hidden rounded-[28px] border border-white/10">
+          <div className="relative overflow-hidden rounded-[28px] border border-[var(--app-border)]">
             <div className="absolute inset-0">
               <ImageWithFallback src={HERO_BG} alt="" className="w-full h-full object-cover opacity-70" />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-[var(--app-bg)]" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[color:var(--app-overlay-soft)] to-[var(--app-bg)]" />
             </div>
 
             <div className="relative px-6 md:px-10 py-16 md:py-20 flex flex-col items-center text-center">
@@ -150,14 +150,14 @@ export default function LandingPage() {
               <button
                 key={p.id}
                 onClick={() => goMapSelected(p.id)}
-                className="text-left rounded-2xl overflow-hidden border border-white/10 bg-[#11161d] hover:border-white/15 transition-colors"
+                className="text-left rounded-2xl overflow-hidden border border-[var(--app-border)] bg-[var(--app-surface)] hover:opacity-95 transition-colors"
               >
                 <div className="relative h-44">
                   <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover" />
-                  <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 border border-[var(--app-border)] flex items-center justify-center">
+                  <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-[var(--app-overlay-soft)] border border-[var(--app-border)] flex items-center justify-center">
                     <Heart className="w-4 h-4 text-[var(--app-text-muted)]" />
                   </div>
-                  <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-black/40 border border-[var(--app-border)] text-[10px] font-semibold text-[var(--app-text-muted)]">
+                  <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-[var(--app-overlay-soft)] border border-[var(--app-border)] text-[10px] font-semibold text-[var(--app-text-muted)]">
                     {p.category}
                   </div>
                 </div>
@@ -169,7 +169,7 @@ export default function LandingPage() {
               </button>
             ))}
             {editorsChoice.length === 0 && (
-              <div className="col-span-full py-10 text-center text-sm text-white/45">
+              <div className="col-span-full py-10 text-center text-sm text-[var(--app-text-muted)]">
                 Belum ada data lokasi.
               </div>
             )}
@@ -178,29 +178,29 @@ export default function LandingPage() {
 
         {/* Explore Nearby */}
         <section className="pt-12 pb-20">
-          <div className="rounded-3xl border border-white/10 bg-[#0b0f14]">
+          <div className="rounded-3xl border border-[var(--app-border)] bg-[var(--app-bg)]">
             <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-0">
               <div className="p-6">
-                <div className="text-lg font-semibold text-white">Explore Nearby</div>
-                <div className="mt-1 text-xs text-white/45">Quick picks around you.</div>
+                <div className="text-lg font-semibold">Explore Nearby</div>
+                <div className="mt-1 text-xs text-[var(--app-text-muted)]">Quick picks around you.</div>
                 <div className="mt-4 space-y-3">
                   {exploreNearby.map((p) => (
                     <button
                       key={p.id}
                       onClick={goMap}
-                      className="w-full flex items-center gap-3 p-3 rounded-2xl border border-white/10 bg-[#11161d] hover:border-white/15 transition-colors text-left"
+                      className="w-full flex items-center gap-3 p-3 rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] hover:opacity-95 transition-colors text-left"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-[rgba(127,255,212,0.15)] flex items-center justify-center shrink-0 overflow-hidden">
+                      <div className="w-10 h-10 rounded-xl bg-[color:color-mix(in_srgb,var(--app-accent)_18%,transparent)] flex items-center justify-center shrink-0 overflow-hidden">
                         <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="text-sm font-semibold text-white/90 truncate">{p.name}</div>
-                        <div className="text-[11px] text-white/45 truncate">{p.region}</div>
+                        <div className="text-sm font-semibold truncate">{p.name}</div>
+                        <div className="text-[11px] text-[var(--app-text-muted)] truncate">{p.region}</div>
                       </div>
                     </button>
                   ))}
                   {exploreNearby.length === 0 && (
-                    <div className="py-6 text-center text-sm text-white/45">
+                    <div className="py-6 text-center text-sm text-[var(--app-text-muted)]">
                       Belum ada data lokasi.
                     </div>
                   )}
@@ -215,16 +215,16 @@ export default function LandingPage() {
                 </button>
               </div>
 
-              <div className="relative min-h-[320px] lg:min-h-[420px] overflow-hidden rounded-b-3xl lg:rounded-b-none lg:rounded-r-3xl border-t lg:border-t-0 lg:border-l border-white/10">
+              <div className="relative min-h-[320px] lg:min-h-[420px] overflow-hidden rounded-b-3xl lg:rounded-b-none lg:rounded-r-3xl border-t lg:border-t-0 lg:border-l border-[var(--app-border)]">
                 <ImageWithFallback src={SIM_MAP_BG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" />
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(11,15,20,0.2)] to-[#0b0f14]" />
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[color:var(--app-bg)]" />
 
                 {/* Minimal map controls (visual only) */}
                 <div className="absolute bottom-6 right-6 flex flex-col gap-3">
-                  <button className="w-11 h-11 rounded-full border border-white/10 bg-[#11161d]/80 backdrop-blur-md flex items-center justify-center">
+                  <button className="w-11 h-11 rounded-full border border-[var(--app-border)] bg-[var(--app-surface-2)] backdrop-blur-md flex items-center justify-center">
                     <PlusIcon />
                   </button>
-                  <button className="w-11 h-11 rounded-full border border-white/10 bg-[#11161d]/80 backdrop-blur-md flex items-center justify-center">
+                  <button className="w-11 h-11 rounded-full border border-[var(--app-border)] bg-[var(--app-surface-2)] backdrop-blur-md flex items-center justify-center">
                     <MinusIcon />
                   </button>
                 </div>
@@ -238,7 +238,7 @@ export default function LandingPage() {
 
 function PlusIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg viewBox="0 0 24 24" className="w-5 h-5 text-[var(--app-text-muted)]" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M12 5v14" />
       <path d="M5 12h14" />
     </svg>
@@ -247,7 +247,7 @@ function PlusIcon() {
 
 function MinusIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg viewBox="0 0 24 24" className="w-5 h-5 text-[var(--app-text-muted)]" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M5 12h14" />
     </svg>
   );

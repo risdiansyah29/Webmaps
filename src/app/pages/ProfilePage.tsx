@@ -5,6 +5,7 @@ import { supabase } from "../../lib/supabaseClient";
 import type { Place } from "../data/places";
 import { AuthModal, type AuthUser } from "../components/AuthModal";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useTheme } from "../layout/AppShell";
 
 function clsx(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(" ");
@@ -12,6 +13,7 @@ function clsx(...parts: Array<string | false | null | undefined>) {
 
 export default function ProfilePage() {
   const nav = useNavigate();
+  const { isDark } = useTheme();
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [authOpen, setAuthOpen] = useState(false);
 
@@ -168,10 +170,10 @@ export default function ProfilePage() {
                   <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover" />
                   <button
                     onClick={() => removeFavorite(p.id)}
-                    className="absolute top-3 right-3 w-10 h-10 rounded-full border border-[var(--app-border)] bg-black/40 backdrop-blur-md flex items-center justify-center"
+                    className="absolute top-3 right-3 w-10 h-10 rounded-full border border-[var(--app-border)] bg-[var(--app-overlay-soft)] backdrop-blur-md flex items-center justify-center"
                     aria-label="Remove favorite"
                   >
-                    <Heart className="w-5 h-5 fill-orange-500 text-orange-500" />
+                    <Heart className="w-5 h-5 fill-[var(--app-rating)] text-[var(--app-rating)]" />
                   </button>
                 </div>
                 <div className="p-5">
@@ -205,7 +207,7 @@ export default function ProfilePage() {
 
       <AuthModal
         open={authOpen}
-        isDark={true}
+        isDark={isDark}
         initialTab="login"
         onClose={() => setAuthOpen(false)}
         onLogin={(u) => {

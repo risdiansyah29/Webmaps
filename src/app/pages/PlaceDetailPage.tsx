@@ -75,7 +75,7 @@ export default function PlaceDetailPage() {
             onClick={() => nav(-1)}
             className={clsx(
               "w-10 h-10 rounded-full border flex items-center justify-center",
-              isDark ? "bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text-muted)] hover:text-[var(--app-text)]" : "bg-white border-neutral-200",
+              "bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text-muted)] hover:text-[var(--app-text)]",
             )}
             aria-label="Back"
           >
@@ -87,16 +87,16 @@ export default function PlaceDetailPage() {
               onClick={() => setIsFavorite((v) => !v)}
               className={clsx(
                 "w-10 h-10 rounded-full border flex items-center justify-center",
-                isDark ? "bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text-muted)] hover:text-[var(--app-text)]" : "bg-white border-neutral-200",
+                "bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text-muted)] hover:text-[var(--app-text)]",
               )}
               aria-label="Save"
             >
-              <Heart className={clsx("w-5 h-5", isFavorite ? "fill-orange-500 text-orange-500" : "")} />
+              <Heart className={clsx("w-5 h-5", isFavorite ? "fill-[var(--app-rating)] text-[var(--app-rating)]" : "")} />
             </button>
             <button
               className={clsx(
                 "w-10 h-10 rounded-full border flex items-center justify-center",
-                isDark ? "bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text-muted)] hover:text-[var(--app-text)]" : "bg-white border-neutral-200",
+                "bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text-muted)] hover:text-[var(--app-text)]",
               )}
               aria-label="Share"
             >
@@ -106,16 +106,16 @@ export default function PlaceDetailPage() {
         </div>
         {/* Gallery */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-4">
-          <div className="rounded-3xl overflow-hidden border border-white/10 bg-[#11161d]">
+          <div className="rounded-3xl overflow-hidden border border-[var(--app-border)] bg-[var(--app-surface)]">
             <ImageWithFallback src={gallery[0]} alt="" className="w-full h-[360px] lg:h-[420px] object-cover" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             {gallery.slice(1, 5).map((src, i) => (
-              <div key={i} className="relative rounded-3xl overflow-hidden border border-white/10 bg-[#11161d]">
+              <div key={i} className="relative rounded-3xl overflow-hidden border border-[var(--app-border)] bg-[var(--app-surface)]">
                 <ImageWithFallback src={src} alt="" className="w-full h-[170px] lg:h-[200px] object-cover" />
                 {i === 3 && (
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <div className="text-sm font-semibold text-white/90">+12 photos</div>
+                  <div className="absolute inset-0 bg-[var(--app-overlay-soft)] flex items-center justify-center">
+                    <div className="text-sm font-semibold">+12 photos</div>
                   </div>
                 )}
               </div>
@@ -126,16 +126,16 @@ export default function PlaceDetailPage() {
         {/* Header + actions */}
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
           <div>
-            <div className="text-white/90 font-semibold text-2xl">{place?.name ?? "—"}</div>
-            <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/60">
+            <div className="font-semibold text-2xl">{place?.name ?? "—"}</div>
+            <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[var(--app-text-muted)]">
               <span className="inline-flex items-center gap-1 text-[var(--app-accent)]">
                 <Star className="w-4 h-4 fill-[var(--app-accent)]" />
                 {place?.rating ?? (ratingAvg?.toFixed(1) ?? "—")}
               </span>
-              <span className="text-white/45">{reviews.length.toLocaleString()} reviews</span>
-              <span className="inline-flex items-center gap-2 text-white/55">
-                <span className="px-3 py-1 rounded-full border border-white/10 bg-[#11161d] text-xs">Fine Dining</span>
-              </span>
+              <span className="text-[var(--app-text-muted)]">{reviews.length.toLocaleString()} reviews</span>
+                <span className="inline-flex items-center gap-2 text-[var(--app-text-muted)]">
+                  <span className="px-3 py-1 rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] text-xs">Fine Dining</span>
+                </span>
               {place?.address && (
                 <span className="inline-flex items-center gap-1">
                   <MapPin className="w-4 h-4" />
@@ -150,12 +150,12 @@ export default function PlaceDetailPage() {
               </button>
               <button
                 onClick={() => setIsFavorite((v) => !v)}
-                className="px-5 py-3 rounded-2xl border border-white/10 bg-[#11161d] text-white/80 font-semibold text-sm flex items-center gap-2"
+                className="px-5 py-3 rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] font-semibold text-sm flex items-center gap-2 hover:opacity-95"
               >
-                <Heart className={clsx("w-4 h-4", isFavorite ? "fill-orange-500 text-orange-500" : "")} />
+                <Heart className={clsx("w-4 h-4", isFavorite ? "fill-[var(--app-rating)] text-[var(--app-rating)]" : "")} />
                 Save
               </button>
-              <button className="px-5 py-3 rounded-2xl border border-white/10 bg-[#11161d] text-white/80 font-semibold text-sm flex items-center gap-2">
+              <button className="px-5 py-3 rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] font-semibold text-sm flex items-center gap-2 hover:opacity-95">
                 <Share2 className="w-4 h-4" />
                 Share
               </button>
@@ -163,17 +163,17 @@ export default function PlaceDetailPage() {
 
             {/* About */}
             <div className="mt-8">
-              <div className="text-white/85 font-semibold">About the experience</div>
-              <p className="mt-2 text-sm text-white/55 leading-relaxed">
+              <div className="font-semibold">About the experience</div>
+              <p className="mt-2 text-sm text-[var(--app-text-muted)] leading-relaxed">
                 {place?.description ??
                   "A curated destination with a signature atmosphere. Explore highlights, amenities, and recent reviews."}
               </p>
             </div>
 
             {/* Amenities */}
-            <div className="mt-6 rounded-3xl border border-white/10 bg-[#11161d] p-5">
-              <div className="text-white/85 font-semibold">Amenities & Details</div>
-              <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-white/70">
+            <div className="mt-6 rounded-3xl border border-[var(--app-border)] bg-[var(--app-surface)] p-5">
+              <div className="font-semibold">Amenities & Details</div>
+              <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-[var(--app-text)]">
                 {[
                   "Free High-speed WiFi",
                   "Outdoor Seating",
@@ -184,7 +184,7 @@ export default function PlaceDetailPage() {
                   "Family Friendly",
                   "Wheelchair Access",
                 ].map((t) => (
-                  <div key={t} className="rounded-2xl border border-white/10 bg-[#0b0f14]/40 p-3">
+                  <div key={t} className="rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface-2)] p-3">
                     {t}
                   </div>
                 ))}
@@ -194,15 +194,15 @@ export default function PlaceDetailPage() {
             {/* Reviews */}
             <div className="mt-8">
               <div className="flex items-center justify-between">
-                <div className="text-white/85 font-semibold">Guest Reviews</div>
-                <div className="text-xs text-white/50">Latest Reviews</div>
+                <div className="font-semibold">Guest Reviews</div>
+                <div className="text-xs text-[var(--app-text-muted)]">Latest Reviews</div>
               </div>
               <div className="mt-4 space-y-4">
                 {reviews.slice(0, 3).map((r) => (
-                  <div key={r.id} className="rounded-3xl border border-white/10 bg-[#11161d] p-5">
+                  <div key={r.id} className="rounded-3xl border border-[var(--app-border)] bg-[var(--app-surface)] p-5">
                     <div className="flex items-center justify-between">
-                      <div className="text-sm font-semibold text-white/85">{r.user_name}</div>
-                      <div className="text-xs text-white/45">{fmtDate(r.created_at)}</div>
+                      <div className="text-sm font-semibold">{r.user_name}</div>
+                      <div className="text-xs text-[var(--app-text-muted)]">{fmtDate(r.created_at)}</div>
                     </div>
                     <div className="mt-2 flex items-center gap-1">
                       {Array.from({ length: 5 }).map((_, i) => (
@@ -210,16 +210,18 @@ export default function PlaceDetailPage() {
                           key={i}
                           className={clsx(
                             "w-4 h-4",
-                            i < (r.rating ?? 0) ? "fill-[var(--app-accent)] text-[var(--app-accent)]" : "text-white/20",
+                            i < (r.rating ?? 0)
+                              ? "fill-[var(--app-accent)] text-[var(--app-accent)]"
+                              : "text-[color:color-mix(in_srgb,var(--app-text)_20%,transparent)]",
                           )}
                         />
                       ))}
                     </div>
-                    <div className="mt-3 text-sm text-white/60 leading-relaxed">{r.comment}</div>
+                    <div className="mt-3 text-sm text-[var(--app-text-muted)] leading-relaxed">{r.comment}</div>
                   </div>
                 ))}
                 {!reviews.length && (
-                  <div className="rounded-3xl border border-white/10 bg-[#11161d] p-6 text-sm text-white/55">
+                  <div className="rounded-3xl border border-[var(--app-border)] bg-[var(--app-surface)] p-6 text-sm text-[var(--app-text-muted)]">
                     Belum ada ulasan untuk tempat ini.
                   </div>
                 )}
@@ -227,34 +229,11 @@ export default function PlaceDetailPage() {
             </div>
           </div>
 
-          {/* Reservation / map card (dummy) */}
+          {/* Side card */}
           <aside className="space-y-4">
-            <div className="rounded-3xl border border-white/10 bg-[#11161d] p-5">
-              <div className="text-white/85 font-semibold">Quick Reservation</div>
-              <div className="mt-4 space-y-3">
-                <div className="rounded-2xl border border-white/10 bg-[#0b0f14]/40 p-3">
-                  <div className="text-[11px] text-white/50">Date</div>
-                  <div className="mt-1 flex items-center justify-between text-sm text-white/75">
-                    Oct 24, 2024
-                    <CalendarDays className="w-4 h-4 text-white/55" />
-                  </div>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-[#0b0f14]/40 p-3">
-                  <div className="text-[11px] text-white/50">Guests</div>
-                  <div className="mt-1 flex items-center justify-between text-sm text-white/75">
-                    2 People
-                    <Users className="w-4 h-4 text-white/55" />
-                  </div>
-                </div>
-                <button className="w-full py-3 rounded-2xl bg-[var(--app-accent)] text-[var(--app-accent-fg)] hover:opacity-95 font-semibold text-sm">
-                  Check Availability
-                </button>
-              </div>
-            </div>
-
             <button
               onClick={() => nav(`/map?selected=${encodeURIComponent(id ?? "")}`)}
-              className="w-full rounded-3xl border border-white/10 bg-[#11161d] overflow-hidden text-left"
+              className="w-full rounded-3xl border border-[var(--app-border)] bg-[var(--app-surface)] overflow-hidden text-left"
             >
               <div className="relative h-40">
                 <ImageWithFallback
@@ -262,8 +241,8 @@ export default function PlaceDetailPage() {
                   alt=""
                   className="absolute inset-0 w-full h-full object-cover opacity-40"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#11161d]" />
-                <div className="absolute bottom-4 left-4 text-sm font-semibold text-white/85">View on Map</div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[color:var(--app-bg)]" />
+                <div className="absolute bottom-4 left-4 text-sm font-semibold">View on Map</div>
                 <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-[var(--app-accent)] text-[var(--app-accent-fg)] flex items-center justify-center">
                   <MapPin className="w-5 h-5" />
                 </div>

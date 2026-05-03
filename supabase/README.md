@@ -18,10 +18,8 @@ Tabel yang dipakai frontend:
 - `locations`
 - `reviews`
 - `favorites`
-- `reservations`
 
 Semua tabel sudah mengaktifkan RLS dan policy minimal agar aplikasi bisa:
 
 - public read untuk `locations` dan `reviews`
-- write hanya untuk user yang login (`favorites`, `reviews`, `reservations`)
-
+- write hanya untuk user yang login (`favorites`, `reviews`)

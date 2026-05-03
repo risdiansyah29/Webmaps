@@ -174,9 +174,7 @@ export function MapView({ places, selected, onSelect, isDark, userLoc, onLocate,
           className={`absolute bottom-5 right-5 w-12 h-12 rounded-full backdrop-blur-md shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 z-[400] disabled:cursor-wait disabled:hover:scale-100 ${
             userLoc
               ? "bg-[var(--app-accent)] text-[var(--app-accent-fg)] border border-transparent shadow-black/20"
-              : isDark
-                ? "bg-[var(--app-surface-2)] text-[var(--app-text)] border border-[var(--app-border)]"
-                : "bg-white/95 text-blue-600 border border-neutral-200"
+              : "bg-[var(--app-surface-2)] text-[var(--app-text)] border border-[var(--app-border)]"
           }`}
         >
           {locating ? (

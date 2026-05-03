@@ -3,7 +3,6 @@ import LandingPage from "./pages/LandingPage";
 import MapPage from "./pages/MapPage";
 import PlaceDetailPage from "./pages/PlaceDetailPage";
 import FavoritesPage from "./pages/FavoritesPage";
-import ReservationsPage from "./pages/ReservationsPage";
 import ProfilePage from "./pages/ProfilePage";
 import AppShell from "./layout/AppShell";
 
@@ -16,7 +15,6 @@ export default function App() {
           <Route path="/discover" element={<LandingPage />} />
           <Route path="/map" element={<MapPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
-          <Route path="/reservations" element={<ReservationsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/place/:id" element={<PlaceDetailPage />} />
         </Route>

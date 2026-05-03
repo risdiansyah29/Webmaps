@@ -16,7 +16,6 @@ export function useTheme() {
 function pageTitle(pathname: string) {
   if (pathname.startsWith("/map")) return "Map";
   if (pathname.startsWith("/favorites")) return "Favorites";
-  if (pathname.startsWith("/reservations")) return "Reservations";
   if (pathname.startsWith("/profile")) return "Profile";
   if (pathname.startsWith("/place/")) return "Details";
   return "Discover";
@@ -26,15 +25,15 @@ export default function AppShell() {
   const nav = useNavigate();
   const loc = useLocation();
 
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window === "undefined") return true;
+    const t = localStorage.getItem("theme");
+    if (t === "dark") return true;
+    if (t === "light") return false;
+    return window.matchMedia?.("(prefers-color-scheme: dark)")?.matches ?? true;
+  });
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [authOpen, setAuthOpen] = useState(false);
-
-  useEffect(() => {
-    const t = localStorage.getItem("theme");
-    if (t === "light") setIsDark(false);
-    else setIsDark(true);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("theme", isDark ? "dark" : "light");
@@ -95,12 +94,6 @@ export default function AppShell() {
                   Map
                 </button>
                 <button
-                  onClick={() => nav("/reservations")}
-                  className="text-xs tracking-[0.6px] font-semibold text-[var(--app-text-muted)] hover:text-[var(--app-text)]"
-                >
-                  Reservations
-                </button>
-                <button
                   onClick={() => nav("/favorites")}
                   className="text-xs tracking-[0.6px] font-semibold text-[var(--app-text-muted)] hover:text-[var(--app-text)]"
                 >
@@ -127,7 +120,7 @@ export default function AppShell() {
                     if (!currentUser) setAuthOpen(true);
                     else nav("/profile");
                   }}
-                  className="w-9 h-9 rounded-full bg-gradient-to-br from-orange-400 to-cyan-500 ring-2 ring-[var(--app-border)]"
+                  className="w-9 h-9 rounded-full bg-[var(--app-accent)] ring-2 ring-[var(--app-border)]"
                   aria-label="User profile"
                   title={currentUser ? currentUser.name : "Login"}
                 />

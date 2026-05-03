@@ -1,4 +1,4 @@
--- Minimal Supabase schema for this app (locations, reviews, favorites, reservations)
+-- Minimal Supabase schema for this app (locations, reviews, favorites)
 -- Run in Supabase SQL editor.
 
 -- Extensions
@@ -40,27 +40,14 @@ create table if not exists public.favorites (
   unique (user_id, location_id)
 );
 
--- RESERVATIONS (basic)
-create table if not exists public.reservations (
-  id uuid primary key default uuid_generate_v4(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  location_id uuid not null references public.locations(id) on delete cascade,
-  date date not null,
-  guests int not null default 2 check (guests between 1 and 20),
-  status text not null default 'pending',
-  created_at timestamptz not null default now()
-);
-
 -- Indexes
 create index if not exists idx_reviews_location_id on public.reviews(location_id);
 create index if not exists idx_favorites_user_id on public.favorites(user_id);
-create index if not exists idx_reservations_user_id on public.reservations(user_id);
 
 -- RLS
 alter table public.locations enable row level security;
 alter table public.reviews enable row level security;
 alter table public.favorites enable row level security;
-alter table public.reservations enable row level security;
 
 -- locations: public read
 drop policy if exists "locations_read" on public.locations;
@@ -100,17 +87,3 @@ create policy "favorites_delete_own"
 on public.favorites for delete
 to authenticated
 using (auth.uid() = user_id);
-
--- reservations: only owner can read/write
-drop policy if exists "reservations_read_own" on public.reservations;
-create policy "reservations_read_own"
-on public.reservations for select
-to authenticated
-using (auth.uid() = user_id);
-
-drop policy if exists "reservations_insert_own" on public.reservations;
-create policy "reservations_insert_own"
-on public.reservations for insert
-to authenticated
-with check (auth.uid() = user_id);
-

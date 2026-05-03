@@ -40,13 +40,13 @@ function InputField({
   return (
     <div className="flex flex-col gap-1.5">
       <label
-        className={`text-sm ${isDark ? "text-neutral-300" : "text-neutral-700"}`}
+        className="text-sm text-[var(--app-text-muted)]"
       >
         {label}
       </label>
       <div className="relative flex items-center">
         <Icon
-          className={`absolute left-3 w-4 h-4 ${isDark ? "text-neutral-500" : "text-neutral-400"}`}
+          className="absolute left-3 w-4 h-4 text-[var(--app-text-muted)]"
         />
         <input
           type={type}
@@ -54,11 +54,7 @@ function InputField({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           required
-          className={`w-full pl-10 pr-10 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 ${
-            isDark
-              ? "bg-neutral-800/70 border-neutral-700 text-neutral-100 placeholder:text-neutral-600 focus:border-[var(--app-accent)] focus:ring-[color:var(--app-accent)]/20"
-              : "bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400 focus:border-[var(--app-accent)] focus:ring-[color:var(--app-accent)]/20"
-          }`}
+          className="w-full pl-10 pr-10 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text)] placeholder:text-[var(--app-text-muted)] focus:border-[var(--app-accent)] focus:ring-[color:var(--app-accent)]/20"
         />
         {right && (
           <div className="absolute right-3">{right}</div>
@@ -196,7 +192,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
         >
           {/* Backdrop — click to close */}
           <div
-            className={`absolute inset-0 backdrop-blur-sm ${isDark ? "bg-black/60" : "bg-black/40"}`}
+            className="absolute inset-0 backdrop-blur-sm bg-[var(--app-overlay-soft)]"
             onClick={() => { reset(); onClose(); }}
           />
 
@@ -206,44 +202,38 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.92, opacity: 0, y: 24 }}
             transition={{ type: "spring", damping: 22, stiffness: 280 }}
-            className={`relative w-full max-w-md rounded-3xl shadow-2xl overflow-hidden ${
-              isDark
-                ? "bg-neutral-900 border border-neutral-800"
-                : "bg-white border border-neutral-100"
-            }`}
+            className="relative w-full max-w-md rounded-3xl shadow-2xl overflow-hidden bg-[var(--app-bg)] border border-[var(--app-border)]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Green glow top */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--app-accent)]" />
 
             {/* Header */}
-            <div className={`px-6 pt-6 pb-4 border-b ${isDark ? "border-neutral-800" : "border-neutral-100"}`}>
+            <div className="px-6 pt-6 pb-4 border-b border-[var(--app-border)]">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-xl bg-[var(--app-accent)] flex items-center justify-center shadow-md shadow-black/20">
-                    <MapPin className="w-5 h-5 text-white" />
+                    <MapPin className="w-5 h-5 text-[var(--app-accent-fg)]" />
                   </div>
                   <div>
-                    <div className={`text-sm leading-none ${isDark ? "text-neutral-100" : "text-neutral-900"}`}>
+                    <div className="text-sm leading-none text-[var(--app-text)]">
                       Jelajah Nusantara
                     </div>
-                    <div className={`text-xs mt-0.5 ${isDark ? "text-neutral-500" : "text-neutral-400"}`}>
+                    <div className="text-xs mt-0.5 text-[var(--app-text-muted)]">
                       {tab === "login" ? "Masuk ke akunmu" : "Buat akun baru"}
                     </div>
                   </div>
                 </div>
                 <button
                   onClick={() => { reset(); onClose(); }}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
-                    isDark ? "hover:bg-neutral-800 text-neutral-400" : "hover:bg-neutral-100 text-neutral-500"
-                  }`}
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-colors bg-transparent hover:bg-[var(--app-surface-2)] text-[var(--app-text-muted)] hover:text-[var(--app-text)]"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
               {/* Tab switcher */}
-              <div className={`flex p-1 rounded-full gap-1 ${isDark ? "bg-neutral-800" : "bg-neutral-100"}`}>
+              <div className="flex p-1 rounded-full gap-1 bg-[var(--app-surface-2)] border border-[var(--app-border)]">
                 {(["login", "register"] as const).map((t) => (
                   <button
                     key={t}
@@ -251,9 +241,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                     className={`flex-1 py-2 rounded-full text-sm transition-all ${
                       tab === t
                         ? "bg-[var(--app-accent)] text-[var(--app-accent-fg)] shadow-md shadow-black/20"
-                        : isDark
-                          ? "text-neutral-400 hover:text-neutral-200"
-                          : "text-neutral-500 hover:text-neutral-700"
+                        : "text-[var(--app-text-muted)] hover:text-[var(--app-text)]"
                     }`}
                   >
                     {t === "login" ? "Masuk" : "Daftar"}
@@ -268,11 +256,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
               <button
                 type="button"
                 onClick={handleGoogleLogin}
-                className={`w-full flex items-center justify-center gap-3 py-2.5 rounded-2xl border transition-all hover:scale-[1.02] active:scale-[0.98] mb-4 ${
-                  isDark 
-                    ? "bg-neutral-800 border-neutral-700 text-white hover:bg-neutral-750" 
-                    : "bg-white border-neutral-200 text-neutral-700 hover:bg-neutral-50"
-                }`}
+                className="w-full flex items-center justify-center gap-3 py-2.5 rounded-2xl border transition-all hover:scale-[1.02] active:scale-[0.98] mb-4 bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text)] hover:opacity-95"
               >
                 <img 
                   src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
@@ -285,10 +269,10 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
               {/* 2. Garis Pemisah */}
               <div className="relative mb-6">
                 <div className="absolute inset-0 flex items-center">
-                  <div className={`w-full border-t ${isDark ? "border-neutral-800" : "border-neutral-200"}`}></div>
+                  <div className="w-full border-t border-[var(--app-border)]"></div>
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className={`px-2 ${isDark ? "bg-neutral-900 text-neutral-500" : "bg-white text-neutral-400"}`}>
+                  <span className="px-2 bg-[var(--app-bg)] text-[var(--app-text-muted)]">
                     Atau gunakan email
                   </span>
                 </div>
@@ -327,7 +311,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                         <button
                           type="button"
                           onClick={() => setShowPw((v) => !v)}
-                          className={`${isDark ? "text-neutral-500 hover:text-neutral-300" : "text-neutral-400 hover:text-neutral-600"} transition-colors`}
+                          className="text-[var(--app-text-muted)] hover:text-[var(--app-text)] transition-colors"
                         >
                           {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
@@ -338,7 +322,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                       <motion.p
                         initial={{ opacity: 0, y: -4 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-xs text-red-500 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 px-3 py-2 rounded-xl"
+                        className="text-xs bg-[var(--app-danger-bg)] border border-[var(--app-danger-border)] text-[var(--app-danger-text)] px-3 py-2 rounded-xl"
                       >
                         ⚠️ {error}
                       </motion.p>
@@ -352,7 +336,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                       {loading ? "Memproses..." : "Masuk"}
                     </button>
 
-                    <p className={`text-center text-xs ${isDark ? "text-neutral-500" : "text-neutral-400"}`}>
+                    <p className="text-center text-xs text-[var(--app-text-muted)]">
                       Belum punya akun?{" "}
                       <button
                         type="button"
@@ -403,7 +387,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                         <button
                           type="button"
                           onClick={() => setShowPw((v) => !v)}
-                          className={`${isDark ? "text-neutral-500 hover:text-neutral-300" : "text-neutral-400 hover:text-neutral-600"} transition-colors`}
+                          className="text-[var(--app-text-muted)] hover:text-[var(--app-text)] transition-colors"
                         >
                           {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
@@ -421,7 +405,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                         <button
                           type="button"
                           onClick={() => setShowConfirm((v) => !v)}
-                          className={`${isDark ? "text-neutral-500 hover:text-neutral-300" : "text-neutral-400 hover:text-neutral-600"} transition-colors`}
+                          className="text-[var(--app-text-muted)] hover:text-[var(--app-text)] transition-colors"
                         >
                           {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
@@ -432,7 +416,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                       <motion.p
                         initial={{ opacity: 0, y: -4 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-xs text-red-500 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 px-3 py-2 rounded-xl"
+                        className="text-xs bg-[var(--app-danger-bg)] border border-[var(--app-danger-border)] text-[var(--app-danger-text)] px-3 py-2 rounded-xl"
                       >
                         ⚠️ {error}
                       </motion.p>
@@ -446,7 +430,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                       {loading ? "Mendaftar..." : "Buat Akun"}
                     </button>
 
-                    <p className={`text-center text-xs ${isDark ? "text-neutral-500" : "text-neutral-400"}`}>
+                    <p className="text-center text-xs text-[var(--app-text-muted)]">
                       Sudah punya akun?{" "}
                       <button
                         type="button"
@@ -462,7 +446,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
             </div>
 
             {/* Footer */}
-            <div className={`px-6 pb-5 text-center text-xs ${isDark ? "text-neutral-600" : "text-neutral-400"}`}>
+            <div className="px-6 pb-5 text-center text-xs text-[var(--app-text-muted)]">
             Akun kamu aman tersinkronisasi dengan Cloud ☁️
             </div>
           </motion.div>

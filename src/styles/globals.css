@@ -12,8 +12,18 @@ html, body {
   --app-text: rgba(17, 24, 39, 0.95);
   --app-text-muted: rgba(17, 24, 39, 0.6);
   /* Primary / Accent (shared for light & dark) */
-  --app-accent: #ff6fb1;
+  /* Pink blush, bright */
+  --app-accent: #ff4fa3;
   --app-accent-fg: #0b0f14;
+
+  --app-overlay: rgba(0, 0, 0, 0.5);
+  --app-overlay-soft: rgba(0, 0, 0, 0.35);
+
+  /* Category colors (used by CATEGORY_META) */
+  --cat-nature: #16a34a;
+  --cat-cultural: #9333ea;
+  --cat-traditional: #ea580c;
+  --cat-modern: #0ea5e9;
 }
 
 .dark {
@@ -23,8 +33,16 @@ html, body {
   --app-border: rgba(255, 255, 255, 0.1);
   --app-text: rgba(255, 255, 255, 0.92);
   --app-text-muted: rgba(255, 255, 255, 0.55);
-  --app-accent: #ff6fb1;
+  --app-accent: #ff4fa3;
   --app-accent-fg: #0b0f14;
+
+  --app-overlay: rgba(0, 0, 0, 0.6);
+  --app-overlay-soft: rgba(0, 0, 0, 0.4);
+
+  --cat-nature: #16a34a;
+  --cat-cultural: #9333ea;
+  --cat-traditional: #ea580c;
+  --cat-modern: #0ea5e9;
 }
 
 /* ─── Smooth scrolling & selection color ────────────────────────────────────── */
@@ -33,7 +51,7 @@ html {
 }
 
 ::selection {
-  background-color: rgba(34, 197, 94, 0.25);
+  background-color: color-mix(in srgb, var(--app-accent) 25%, transparent);
   color: inherit;
 }
 
@@ -46,24 +64,49 @@ html {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(120, 120, 120, 0.3);
+  background: color-mix(in srgb, var(--app-text) 18%, transparent);
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(120, 120, 120, 0.55);
+  background: color-mix(in srgb, var(--app-text) 30%, transparent);
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: color-mix(in srgb, var(--app-text) 14%, transparent);
 }
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: color-mix(in srgb, var(--app-text) 24%, transparent);
+}
+
+/* ─── Semantic colors (used by toasts, ratings, etc.) ───────────────────────── */
+:root {
+  --app-success-bg: rgba(34, 197, 94, 0.14);
+  --app-success-border: rgba(34, 197, 94, 0.28);
+  --app-success-text: rgba(21, 128, 61, 0.95);
+
+  --app-danger-bg: rgba(239, 68, 68, 0.14);
+  --app-danger-border: rgba(239, 68, 68, 0.28);
+  --app-danger-text: rgba(153, 27, 27, 0.95);
+
+  --app-rating: #f59e0b;
+}
+
+.dark {
+  --app-success-bg: rgba(34, 197, 94, 0.14);
+  --app-success-border: rgba(34, 197, 94, 0.28);
+  --app-success-text: rgba(187, 247, 208, 0.92);
+
+  --app-danger-bg: rgba(239, 68, 68, 0.14);
+  --app-danger-border: rgba(239, 68, 68, 0.28);
+  --app-danger-text: rgba(254, 202, 202, 0.92);
+
+  --app-rating: #f59e0b;
 }
 
 /* ─── User location marker — pulsing animation ───────────────────────���──────── */
 @keyframes pulse-ring {
-  0%   { box-shadow: 0 0 0 0   rgba(37, 99, 235, 0.55), 0 0 0 4px rgba(37, 99, 235, 0.20); }
-  70%  { box-shadow: 0 0 0 14px rgba(37, 99, 235, 0),   0 0 0 4px rgba(37, 99, 235, 0.20); }
-  100% { box-shadow: 0 0 0 0   rgba(37, 99, 235, 0),   0 0 0 4px rgba(37, 99, 235, 0.20); }
+  0%   { box-shadow: 0 0 0 0   color-mix(in srgb, var(--app-accent) 55%, transparent), 0 0 0 4px color-mix(in srgb, var(--app-accent) 20%, transparent); }
+  70%  { box-shadow: 0 0 0 14px color-mix(in srgb, var(--app-accent) 0%, transparent), 0 0 0 4px color-mix(in srgb, var(--app-accent) 20%, transparent); }
+  100% { box-shadow: 0 0 0 0   color-mix(in srgb, var(--app-accent) 0%, transparent), 0 0 0 4px color-mix(in srgb, var(--app-accent) 20%, transparent); }
 }
 
 .user-loc-pin div {
@@ -100,13 +143,13 @@ html {
 
 /* Dark mode popup */
 .dark .leaflet-popup-content-wrapper {
-  background: #1c1c1e !important;
+  background: var(--app-surface) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  color: #f5f5f5;
+  color: var(--app-text);
 }
 
 .dark .leaflet-popup-tip {
-  background: #1c1c1e !important;
+  background: var(--app-surface) !important;
 }
 
 /* ─── Leaflet zoom / attribution tweaks ─────────────────────────────────────── */

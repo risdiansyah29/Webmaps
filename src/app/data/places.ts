@@ -18,8 +18,8 @@ export interface Place {
 }
 
 export const CATEGORY_META: Record<Category, { label: string; color: string; emoji: string }> = {
-  nature: { label: "Wisata Alam", color: "#16a34a", emoji: "🌿" },
-  cultural: { label: "Wisata Budaya", color: "#9333ea", emoji: "🏛️" },
-  traditional: { label: "Kuliner Tradisional", color: "#ea580c", emoji: "🍛" },
-  modern: { label: "Kuliner Modern", color: "#0ea5e9", emoji: "🍽️" },
+  nature: { label: "Wisata Alam", color: "var(--cat-nature)", emoji: "🌿" },
+  cultural: { label: "Wisata Budaya", color: "var(--cat-cultural)", emoji: "🏛️" },
+  traditional: { label: "Kuliner Tradisional", color: "var(--cat-traditional)", emoji: "🍛" },
+  modern: { label: "Kuliner Modern", color: "var(--cat-modern)", emoji: "🍽️" },
 };

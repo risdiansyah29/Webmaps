@@ -372,22 +372,20 @@ export default function MapPage() {
     <div className="h-[calc(100vh-72px)] w-screen flex flex-col overflow-hidden">
 
       {/* Mobile search (keeps core workflow available on small screens) */}
-      <div className={`md:hidden px-4 py-3 shrink-0 border-b ${isDark ? "bg-[rgba(11,15,20,0.7)] border-white/10" : "bg-white/70 border-neutral-200/70"}`}>
-        <div className={`flex items-center gap-3 rounded-full border px-4 py-3 ${isDark ? "bg-[#11161d] border-white/10" : "bg-white border-neutral-200"}`}>
-          <Search className={`w-4 h-4 ${isDark ? "text-white/55" : "text-neutral-400"}`} />
+      <div className="md:hidden px-4 py-3 shrink-0 border-b border-[var(--app-border)] bg-[color:var(--app-bg)]/70">
+        <div className="flex items-center gap-3 rounded-full border border-[var(--app-border)] px-4 py-3 bg-[var(--app-surface)]">
+          <Search className="w-4 h-4 text-[var(--app-text-muted)]" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search places"
-            className={`bg-transparent outline-none text-sm flex-1 ${
-              isDark ? "text-white placeholder:text-white/40" : "text-neutral-900 placeholder:text-neutral-400"
-            }`}
+            className="bg-transparent outline-none text-sm flex-1 text-[var(--app-text)] placeholder:text-[var(--app-text-muted)]"
           />
         </div>
       </div>
 
       {/* CATEGORY + RATING FILTER STRIP */}
-      <div className={`px-4 md:px-6 py-3 flex gap-2 overflow-x-auto shrink-0 border-b backdrop-blur-xl transition-colors items-center ${isDark ? "bg-[rgba(11,15,20,0.7)] border-white/10" : "bg-white/70 border-neutral-200/70"}`}>
+      <div className="px-4 md:px-6 py-3 flex gap-2 overflow-x-auto shrink-0 border-b border-[var(--app-border)] backdrop-blur-xl transition-colors items-center bg-[color:var(--app-bg)]/70">
         {CATEGORIES.map((c) => {
           const meta = CATEGORY_META[c];
           const active = activeCategories.has(c);
@@ -397,10 +395,8 @@ export default function MapPage() {
               onClick={() => toggleCategory(c)}
               className={`shrink-0 px-4 py-2 rounded-full border text-sm transition-all active:scale-95 ${
                 active
-                  ? "text-[#0b0f14] border-transparent shadow-md"
-                  : isDark
-                    ? "bg-[#11161d] text-white/80 border-white/10 hover:text-white"
-                    : "bg-white text-neutral-600 border-neutral-200 hover:border-neutral-400"
+                  ? "text-[var(--app-accent-fg)] border-transparent shadow-md"
+                  : "bg-[var(--app-surface)] text-[var(--app-text-muted)] border-[var(--app-border)] hover:text-[var(--app-text)]"
               }`}
               style={active ? { backgroundColor: "var(--app-accent)" } : {}}
             >
@@ -410,7 +406,7 @@ export default function MapPage() {
         })}
 
         {/* Min-rating filter */}
-        <div className={`shrink-0 ml-auto flex items-center gap-1 pl-3 border-l ${isDark ? "border-white/10" : "border-neutral-200"}`}>
+        <div className="shrink-0 ml-auto flex items-center gap-1 pl-3 border-l border-[var(--app-border)]">
           {/* Array [0, 1, 2, 3, 4, 5] untuk mencakup semua level bintang */}
           {[0, 1, 2, 3, 4, 5].map((r) => (
             <button
@@ -419,9 +415,7 @@ export default function MapPage() {
               className={`shrink-0 px-3 py-1.5 rounded-full border text-xs flex items-center gap-1 transition-all ${
                 minRating === r
                   ? "bg-[var(--app-accent)] text-[var(--app-accent-fg)] border-transparent"
-                  : isDark
-                    ? "bg-[#11161d] text-white/75 border-white/10"
-                    : "bg-white text-neutral-600 border-neutral-200"
+                  : "bg-[var(--app-surface)] text-[var(--app-text-muted)] border-[var(--app-border)]"
               }`}
             >
               {r === 0 ? (
@@ -458,48 +452,38 @@ export default function MapPage() {
               animate={{ x: 0 }}
               exit={{ x: 400 }}
               transition={{ type: "spring", damping: 25 }}
-              className={`absolute md:static right-0 top-0 bottom-0 w-full md:w-96 overflow-y-auto p-4 z-[400] border-l md:border-none ${
-                isDark ? "bg-[#0b0f14] md:bg-transparent border-white/10" : "bg-white md:bg-transparent border-neutral-200"
-              }`}
+              className="absolute md:static right-0 top-0 bottom-0 w-full md:w-96 overflow-y-auto p-4 z-[400] border-l md:border-none bg-[var(--app-bg)] border-[var(--app-border)] md:bg-transparent"
             >
               {selected ? (
-                <div
-                  className={`rounded-3xl border overflow-hidden ${
-                    isDark ? "bg-[rgba(17,22,29,0.8)] border-white/10 text-white" : "bg-white border-neutral-200"
-                  }`}
-                >
+                <div className="rounded-3xl border overflow-hidden bg-[var(--app-surface-2)] border-[var(--app-border)]">
                   <div className="relative">
                     <ImageWithFallback
                       src={selected.image}
                       alt={selected.name}
                       className="w-full h-40 object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(11,15,20,0.85)]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[color:var(--app-bg)]" />
                     <button
                       onClick={() => selectPlace(null)}
                       aria-label="Close details"
-                      className={`absolute top-3 left-3 w-10 h-10 rounded-full flex items-center justify-center border backdrop-blur-md ${
-                        isDark ? "bg-[rgba(11,15,20,0.55)] border-white/10 text-white/85 hover:text-white" : "bg-white/95 border-neutral-200 text-neutral-700"
-                      }`}
+                      className="absolute top-3 left-3 w-10 h-10 rounded-full flex items-center justify-center border border-[var(--app-border)] bg-[var(--app-overlay-soft)] backdrop-blur-md text-[var(--app-text)]"
                     >
                       <X className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => toggleFavorite(selected.id)}
                       aria-label="Favorite"
-                      className={`absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center border backdrop-blur-md ${
-                        isDark ? "bg-[rgba(11,15,20,0.55)] border-white/10 text-white/85 hover:text-white" : "bg-white/95 border-neutral-200 text-neutral-700"
-                      }`}
+                      className="absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center border border-[var(--app-border)] bg-[var(--app-overlay-soft)] backdrop-blur-md text-[var(--app-text)]"
                     >
-                      <Heart className={`w-5 h-5 ${favorites.has(selected.id) ? "fill-orange-500 text-orange-500" : ""}`} />
+                      <Heart className={`w-5 h-5 ${favorites.has(selected.id) ? "fill-[var(--app-rating)] text-[var(--app-rating)]" : ""}`} />
                     </button>
                   </div>
 
                   <div className="p-4">
-                    <div className={`font-semibold text-lg ${isDark ? "text-white" : "text-neutral-900"}`}>
+                    <div className="font-semibold text-lg">
                       {selected.name}
                     </div>
-                    <div className={`mt-1 flex items-center gap-3 text-sm ${isDark ? "text-white/60" : "text-neutral-600"}`}>
+                    <div className="mt-1 flex items-center gap-3 text-sm text-[var(--app-text-muted)]">
                       <span className="inline-flex items-center gap-1 text-[var(--app-accent)]">
                         <Star className="w-4 h-4 fill-[var(--app-accent)]" />
                         {selected.rating}
@@ -509,7 +493,7 @@ export default function MapPage() {
                         <span className="truncate">{selected.region}</span>
                       </span>
                     </div>
-                    <div className={`mt-2 text-xs ${isDark ? "text-white/55" : "text-neutral-500"}`}>
+                    <div className="mt-2 text-xs text-[var(--app-text-muted)]">
                       {selected.address}
                     </div>
 
@@ -524,19 +508,17 @@ export default function MapPage() {
                       </button>
                       <button
                         onClick={() => selectPlace(null)}
-                        className={`py-3 rounded-2xl text-sm font-semibold border transition-colors ${
-                          isDark ? "bg-[#11161d] border-white/10 text-white/80 hover:text-white" : "bg-white border-neutral-200 text-neutral-700"
-                        }`}
+                        className="py-3 rounded-2xl text-sm font-semibold border transition-colors bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text)] hover:opacity-95"
                       >
                         Back to list
                       </button>
                     </div>
 
                     <div className="mt-4">
-                      <div className={`text-xs font-semibold tracking-[0.6px] ${isDark ? "text-white/55" : "text-neutral-500"}`}>
+                      <div className="text-xs font-semibold tracking-[0.6px] text-[var(--app-text-muted)]">
                         About
                       </div>
-                      <p className={`mt-1 text-sm leading-relaxed ${isDark ? "text-white/70" : "text-neutral-700"}`}>
+                      <p className="mt-1 text-sm leading-relaxed text-[var(--app-text)]">
                         {selected.description}
                       </p>
                     </div>
@@ -545,16 +527,12 @@ export default function MapPage() {
               ) : (
                 <>
                   {/* Explore Nearby (Figma-style panel) */}
-                  <div
-                    className={`rounded-3xl p-4 mb-4 border backdrop-blur-[6px] ${
-                      isDark ? "bg-[rgba(17,22,29,0.8)] border-white/10 text-white" : "bg-white border-neutral-200"
-                    }`}
-                  >
+                  <div className="rounded-3xl p-4 mb-4 border backdrop-blur-[6px] bg-[var(--app-surface-2)] border-[var(--app-border)]">
                     <div className="flex items-center justify-between mb-1">
-                      <div className={`font-semibold ${isDark ? "text-white" : "text-neutral-900"}`}>Explore Nearby</div>
-                  <Sparkles className={`w-4 h-4 text-[var(--app-accent)]`} />
+                      <div className="font-semibold text-[var(--app-text)]">Explore Nearby</div>
+                      <Sparkles className="w-4 h-4 text-[var(--app-accent)]" />
                     </div>
-                    <div className={`text-xs mb-3 ${isDark ? "text-white/55" : "text-neutral-500"}`}>
+                    <div className="text-xs mb-3 text-[var(--app-text-muted)]">
                       {userLoc ? "Closest picks based on your location" : "Top picks right now"}
                     </div>
 
@@ -563,21 +541,19 @@ export default function MapPage() {
                         <button
                           key={p.id}
                           onClick={() => selectPlace(p)}
-                          className={`w-full flex items-center gap-3 p-3 rounded-2xl border text-left transition-colors ${
-                            isDark ? "bg-[rgba(11,15,20,0.55)] border-white/10 hover:bg-[rgba(11,15,20,0.72)]" : "bg-neutral-50 border-neutral-200"
-                          }`}
+                          className="w-full flex items-center gap-3 p-3 rounded-2xl border text-left transition-colors bg-[var(--app-surface)] border-[var(--app-border)] hover:opacity-95"
                         >
                           <img src={p.image} alt={p.name} className="w-10 h-10 rounded-xl object-cover shrink-0" />
                           <div className="min-w-0 flex-1">
-                            <div className={`text-sm leading-tight truncate ${isDark ? "text-white/90" : "text-neutral-900"}`}>{p.name}</div>
-                            <div className={`text-[11px] mt-0.5 truncate ${isDark ? "text-white/50" : "text-neutral-500"}`}>
+                            <div className="text-sm leading-tight truncate">{p.name}</div>
+                            <div className="text-[11px] mt-0.5 truncate text-[var(--app-text-muted)]">
                               {userLoc ? `${distanceKm(userLoc, p).toFixed(1)} km away` : `${p.region} · ⭐ ${p.rating}`}
                             </div>
                           </div>
                         </button>
                       ))}
                       {nearby.length === 0 && (
-                        <div className={`text-sm py-6 text-center ${isDark ? "text-white/45" : "text-neutral-500"}`}>
+                        <div className="text-sm py-6 text-center text-[var(--app-text-muted)]">
                           Tidak ada tempat yang cocok dengan filtermu.
                         </div>
                       )}
@@ -587,13 +563,11 @@ export default function MapPage() {
                       {!userLoc && (
                         <button
                           onClick={requestLocation}
-                          className={`flex-1 py-3 rounded-2xl border text-xs font-semibold tracking-[0.6px] transition-colors ${
-                            isDark ? "bg-[rgba(11,15,20,0.55)] border-white/10 text-white/80 hover:text-white" : "bg-white border-neutral-200 text-neutral-700"
-                          }`}
-                        >
-                          USE MY LOCATION
-                        </button>
-                      )}
+                        className="flex-1 py-3 rounded-2xl border text-xs font-semibold tracking-[0.6px] transition-colors bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text)] hover:opacity-95"
+                      >
+                        USE MY LOCATION
+                      </button>
+                    )}
                       <button
                         onClick={() => {
                           setSidebarOpen(false);
@@ -609,15 +583,15 @@ export default function MapPage() {
                   </div>
 
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className={isDark ? "text-neutral-100" : "text-neutral-900"}>
+                    <h3 className="text-[var(--app-text)]">
                       {showFavorites ? "Favoritmu" : "Tempat"}{" "}
-                      <span className={`text-sm ${isDark ? "text-neutral-500" : "text-neutral-400"}`}>({filtered.length})</span>
+                      <span className="text-sm text-[var(--app-text-muted)]">({filtered.length})</span>
                     </h3>
                     <button
                       onClick={() => setShowFavorites((v) => !v)}
-                      className="md:hidden text-sm text-orange-500 flex items-center gap-1"
+                      className="md:hidden text-sm text-[var(--app-rating)] flex items-center gap-1"
                     >
-                      <Heart className={`w-4 h-4 ${showFavorites ? "fill-orange-500" : ""}`} />
+                      <Heart className={`w-4 h-4 ${showFavorites ? "fill-[var(--app-rating)] text-[var(--app-rating)]" : ""}`} />
                       {favorites.size}
                     </button>
                   </div>
@@ -633,7 +607,7 @@ export default function MapPage() {
                       />
                     ))}
                     {filtered.length === 0 && (
-                      <div className="text-center py-10 text-neutral-500 text-sm">
+                      <div className="text-center py-10 text-[var(--app-text-muted)] text-sm">
                         Tidak ada tempat yang cocok dengan filtermu.
                       </div>
                     )}
@@ -655,12 +629,8 @@ export default function MapPage() {
             transition={{ type: "spring", damping: 22, stiffness: 280 }}
             className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[1000] flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl border backdrop-blur-md text-sm max-w-sm w-[calc(100%-2rem)] ${
               locationToast.type === "success"
-                ? isDark
-                  ? "bg-green-900/90 border-green-700 text-green-100"
-                  : "bg-green-50 border-green-200 text-green-800"
-                : isDark
-                  ? "bg-red-900/90 border-red-700 text-red-100"
-                  : "bg-red-50 border-red-200 text-red-800"
+                ? "bg-[var(--app-success-bg)] border-[var(--app-success-border)] text-[var(--app-success-text)]"
+                : "bg-[var(--app-danger-bg)] border-[var(--app-danger-border)] text-[var(--app-danger-text)]"
             }`}
           >
             <span className="text-base shrink-0">
