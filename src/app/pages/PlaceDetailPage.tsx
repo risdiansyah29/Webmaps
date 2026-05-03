@@ -128,8 +128,8 @@ export default function PlaceDetailPage() {
           <div>
             <div className="text-white/90 font-semibold text-2xl">{place?.name ?? "—"}</div>
             <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/60">
-              <span className="inline-flex items-center gap-1 text-[#7fffd4]">
-                <Star className="w-4 h-4 fill-[#7fffd4]" />
+              <span className="inline-flex items-center gap-1 text-[var(--app-accent)]">
+                <Star className="w-4 h-4 fill-[var(--app-accent)]" />
                 {place?.rating ?? (ratingAvg?.toFixed(1) ?? "—")}
               </span>
               <span className="text-white/45">{reviews.length.toLocaleString()} reviews</span>
@@ -145,7 +145,7 @@ export default function PlaceDetailPage() {
             </div>
 
             <div className="mt-5 flex flex-wrap gap-3">
-              <button className="px-6 py-3 rounded-2xl bg-[#7fffd4] text-[#0b0f14] font-semibold text-sm">
+              <button className="px-6 py-3 rounded-2xl bg-[var(--app-accent)] text-[var(--app-accent-fg)] hover:opacity-95 font-semibold text-sm">
                 Get Directions
               </button>
               <button
@@ -210,7 +210,7 @@ export default function PlaceDetailPage() {
                           key={i}
                           className={clsx(
                             "w-4 h-4",
-                            i < (r.rating ?? 0) ? "fill-[#7fffd4] text-[#7fffd4]" : "text-white/20",
+                            i < (r.rating ?? 0) ? "fill-[var(--app-accent)] text-[var(--app-accent)]" : "text-white/20",
                           )}
                         />
                       ))}
@@ -246,7 +246,7 @@ export default function PlaceDetailPage() {
                     <Users className="w-4 h-4 text-white/55" />
                   </div>
                 </div>
-                <button className="w-full py-3 rounded-2xl bg-[#7fffd4] text-[#0b0f14] font-semibold text-sm">
+                <button className="w-full py-3 rounded-2xl bg-[var(--app-accent)] text-[var(--app-accent-fg)] hover:opacity-95 font-semibold text-sm">
                   Check Availability
                 </button>
               </div>
@@ -264,7 +264,7 @@ export default function PlaceDetailPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#11161d]" />
                 <div className="absolute bottom-4 left-4 text-sm font-semibold text-white/85">View on Map</div>
-                <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-[#7fffd4] text-[#0b0f14] flex items-center justify-center">
+                <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-[var(--app-accent)] text-[var(--app-accent-fg)] flex items-center justify-center">
                   <MapPin className="w-5 h-5" />
                 </div>
               </div>

@@ -402,7 +402,7 @@ export default function MapPage() {
                     ? "bg-[#11161d] text-white/80 border-white/10 hover:text-white"
                     : "bg-white text-neutral-600 border-neutral-200 hover:border-neutral-400"
               }`}
-              style={active ? { backgroundColor: "#7fffd4" } : {}}
+              style={active ? { backgroundColor: "var(--app-accent)" } : {}}
             >
               {meta.emoji} {meta.label}
             </button>
@@ -418,7 +418,7 @@ export default function MapPage() {
               onClick={() => setMinRating(r)}
               className={`shrink-0 px-3 py-1.5 rounded-full border text-xs flex items-center gap-1 transition-all ${
                 minRating === r
-                  ? "bg-[#7fffd4] text-[#0b0f14] border-transparent"
+                  ? "bg-[var(--app-accent)] text-[var(--app-accent-fg)] border-transparent"
                   : isDark
                     ? "bg-[#11161d] text-white/75 border-white/10"
                     : "bg-white text-neutral-600 border-neutral-200"
@@ -500,8 +500,8 @@ export default function MapPage() {
                       {selected.name}
                     </div>
                     <div className={`mt-1 flex items-center gap-3 text-sm ${isDark ? "text-white/60" : "text-neutral-600"}`}>
-                      <span className="inline-flex items-center gap-1 text-[#7fffd4]">
-                        <Star className="w-4 h-4 fill-[#7fffd4]" />
+                      <span className="inline-flex items-center gap-1 text-[var(--app-accent)]">
+                        <Star className="w-4 h-4 fill-[var(--app-accent)]" />
                         {selected.rating}
                       </span>
                       <span className="inline-flex items-center gap-1 min-w-0">
@@ -517,7 +517,7 @@ export default function MapPage() {
                       <button
                         onClick={() => nav(`/place/${selected.id}`)}
                         className={`py-3 rounded-2xl text-sm font-semibold transition-colors ${
-                          isDark ? "bg-[#7fffd4] text-[#0b0f14] hover:bg-[#8fffe0]" : "bg-green-600 text-white hover:bg-green-700"
+                          isDark ? "bg-[var(--app-accent)] text-[var(--app-accent-fg)] hover:opacity-95" : "bg-[var(--app-accent)] text-[var(--app-accent-fg)] hover:opacity-95"
                         }`}
                       >
                         Open details
@@ -552,7 +552,7 @@ export default function MapPage() {
                   >
                     <div className="flex items-center justify-between mb-1">
                       <div className={`font-semibold ${isDark ? "text-white" : "text-neutral-900"}`}>Explore Nearby</div>
-                      <Sparkles className={`w-4 h-4 ${isDark ? "text-[#7fffd4]" : "text-green-600"}`} />
+                  <Sparkles className={`w-4 h-4 text-[var(--app-accent)]`} />
                     </div>
                     <div className={`text-xs mb-3 ${isDark ? "text-white/55" : "text-neutral-500"}`}>
                       {userLoc ? "Closest picks based on your location" : "Top picks right now"}
@@ -599,12 +599,12 @@ export default function MapPage() {
                           setSidebarOpen(false);
                           setShowFavorites(false);
                         }}
-                        className={`flex-1 py-3 rounded-2xl text-xs font-semibold tracking-[0.6px] transition-colors ${
-                          isDark ? "bg-[#7fffd4] text-[#0b0f14] hover:bg-[#8fffe0]" : "bg-green-600 text-white hover:bg-green-700"
-                        }`}
-                      >
-                        EXPLORE ON MAP
-                      </button>
+                    className={`flex-1 py-3 rounded-2xl text-xs font-semibold tracking-[0.6px] transition-colors ${
+                      isDark ? "bg-[var(--app-accent)] text-[var(--app-accent-fg)] hover:opacity-95" : "bg-[var(--app-accent)] text-[var(--app-accent-fg)] hover:opacity-95"
+                    }`}
+                  >
+                    EXPLORE ON MAP
+                  </button>
                     </div>
                   </div>
 

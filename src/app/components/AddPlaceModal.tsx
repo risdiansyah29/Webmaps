@@ -54,8 +54,8 @@ export function AddPlaceModal({ open, onClose, onAdd, isDark }: Props) {
 
   const inputCls = `w-full px-3 py-2 rounded-lg border text-sm focus:outline-none focus:ring-2 ${
     isDark
-      ? "bg-neutral-800 border-neutral-700 text-neutral-100 focus:ring-green-900 focus:border-green-500"
-      : "bg-white border-neutral-200 focus:ring-green-100 focus:border-green-500"
+      ? "bg-neutral-800 border-neutral-700 text-neutral-100 focus:ring-[color:var(--app-accent)]/25 focus:border-[var(--app-accent)]"
+      : "bg-white border-neutral-200 focus:ring-[color:var(--app-accent)]/20 focus:border-[var(--app-accent)]"
   }`;
 
   return (
@@ -115,7 +115,7 @@ export function AddPlaceModal({ open, onClose, onAdd, isDark }: Props) {
                 <button type="button" onClick={onClose} className={`flex-1 py-2.5 rounded-full border text-sm ${isDark ? "border-neutral-700 text-neutral-200" : "border-neutral-200 text-neutral-700"}`}>
                   Batal
                 </button>
-                <button type="submit" className="flex-1 py-2.5 rounded-full bg-green-600 hover:bg-green-700 text-white text-sm transition-colors">
+                <button type="submit" className="flex-1 py-2.5 rounded-full bg-[var(--app-accent)] text-[var(--app-accent-fg)] hover:opacity-95 text-sm transition-colors">
                   Tambah tempat
                 </button>
               </div>

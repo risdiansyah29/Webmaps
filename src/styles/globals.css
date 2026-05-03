@@ -11,7 +11,8 @@ html, body {
   --app-border: rgba(0, 0, 0, 0.12);
   --app-text: rgba(17, 24, 39, 0.95);
   --app-text-muted: rgba(17, 24, 39, 0.6);
-  --app-accent: #22c55e;
+  /* Primary / Accent (shared for light & dark) */
+  --app-accent: #ff6fb1;
   --app-accent-fg: #0b0f14;
 }
 
@@ -22,7 +23,7 @@ html, body {
   --app-border: rgba(255, 255, 255, 0.1);
   --app-text: rgba(255, 255, 255, 0.92);
   --app-text-muted: rgba(255, 255, 255, 0.55);
-  --app-accent: #7fffd4;
+  --app-accent: #ff6fb1;
   --app-accent-fg: #0b0f14;
 }
 

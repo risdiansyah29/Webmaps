@@ -208,7 +208,7 @@ export default function LandingPage() {
 
                 <button
                   onClick={goMap}
-                  className="mt-5 w-full py-3 rounded-2xl bg-[#7fffd4] text-[#0b0f14] font-semibold text-sm flex items-center justify-center gap-2"
+                  className="mt-5 w-full py-3 rounded-2xl bg-[var(--app-accent)] text-[var(--app-accent-fg)] font-semibold text-sm flex items-center justify-center gap-2 hover:opacity-95"
                 >
                   <MapPin className="w-4 h-4" />
                   Explore on Map

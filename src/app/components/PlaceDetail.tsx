@@ -135,8 +135,8 @@ export function PlaceDetail({
                 </span>
               </div>
               <p className="text-neutral-700 dark:text-neutral-300 mb-4">{place.description}</p>
-              <div className="bg-green-50 dark:bg-green-950/40 rounded-xl p-3 mb-4">
-                <div className="text-xs text-green-700 dark:text-green-300 mb-1">Alamat</div>
+              <div className="bg-[color:var(--app-accent)]/10 rounded-xl p-3 mb-4 border border-[color:var(--app-accent)]/15">
+                <div className="text-xs text-[var(--app-accent)] mb-1">Alamat</div>
                 <div className="text-sm text-neutral-800 dark:text-neutral-200">{place.address}</div>
               </div>
               <div className="flex flex-wrap gap-2 mb-6">
@@ -193,7 +193,7 @@ export function PlaceDetail({
                       <button
                         type="submit"
                         disabled={!comment.trim() || rating === 0}
-                        className="w-full py-2.5 rounded-full bg-green-600 hover:bg-green-700 text-white text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full py-2.5 rounded-full bg-[var(--app-accent)] text-[var(--app-accent-fg)] hover:opacity-95 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         Kirim ulasan
                       </button>
@@ -208,7 +208,7 @@ export function PlaceDetail({
                           onClose();      // Tutup modal detail tempat dulu
                           onOpenAuth();   // Baru buka modal login
                         }}
-                        className="text-sm font-semibold text-green-600 hover:text-green-500 transition-colors"
+                        className="text-sm font-semibold text-[var(--app-accent)] hover:opacity-90 transition-colors"
                       >
                         Masuk Sekarang
                       </button>

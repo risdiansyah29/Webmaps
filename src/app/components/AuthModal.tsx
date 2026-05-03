@@ -56,8 +56,8 @@ function InputField({
           required
           className={`w-full pl-10 pr-10 py-2.5 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 ${
             isDark
-              ? "bg-neutral-800/70 border-neutral-700 text-neutral-100 placeholder:text-neutral-600 focus:border-green-500 focus:ring-green-900/50"
-              : "bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400 focus:border-green-500 focus:ring-green-100"
+              ? "bg-neutral-800/70 border-neutral-700 text-neutral-100 placeholder:text-neutral-600 focus:border-[var(--app-accent)] focus:ring-[color:var(--app-accent)]/20"
+              : "bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400 focus:border-[var(--app-accent)] focus:ring-[color:var(--app-accent)]/20"
           }`}
         />
         {right && (
@@ -214,13 +214,13 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
             onClick={(e) => e.stopPropagation()}
           >
             {/* Green glow top */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400 via-emerald-500 to-green-600" />
+            <div className="absolute top-0 left-0 right-0 h-1 bg-[var(--app-accent)]" />
 
             {/* Header */}
             <div className={`px-6 pt-6 pb-4 border-b ${isDark ? "border-neutral-800" : "border-neutral-100"}`}>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-green-400 to-emerald-700 flex items-center justify-center shadow-md shadow-green-500/30">
+                  <div className="w-9 h-9 rounded-xl bg-[var(--app-accent)] flex items-center justify-center shadow-md shadow-black/20">
                     <MapPin className="w-5 h-5 text-white" />
                   </div>
                   <div>
@@ -250,7 +250,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                     onClick={() => switchTab(t)}
                     className={`flex-1 py-2 rounded-full text-sm transition-all ${
                       tab === t
-                        ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md shadow-green-500/20"
+                        ? "bg-[var(--app-accent)] text-[var(--app-accent-fg)] shadow-md shadow-black/20"
                         : isDark
                           ? "text-neutral-400 hover:text-neutral-200"
                           : "text-neutral-500 hover:text-neutral-700"
@@ -347,7 +347,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                     <button
                       type="submit"
                       disabled={loading || !lEmail || !lPassword}
-                      className="mt-1 py-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white transition-all hover:shadow-lg hover:shadow-green-500/25 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60"
+                      className="mt-1 py-3 rounded-2xl bg-[var(--app-accent)] text-[var(--app-accent-fg)] transition-all hover:opacity-95 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60"
                     >
                       {loading ? "Memproses..." : "Masuk"}
                     </button>
@@ -357,7 +357,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                       <button
                         type="button"
                         onClick={() => switchTab("register")}
-                        className="text-green-500 hover:text-green-400 underline-offset-2 hover:underline"
+                        className="text-[var(--app-accent)] hover:opacity-90 underline-offset-2 hover:underline"
                       >
                         Daftar sekarang
                       </button>
@@ -441,7 +441,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                     <button
                       type="submit"
                       disabled={loading || !rName || !rEmail || !rPassword || !rConfirm}
-                      className="mt-1 py-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white transition-all hover:shadow-lg hover:shadow-green-500/25"
+                      className="mt-1 py-3 rounded-2xl bg-[var(--app-accent)] text-[var(--app-accent-fg)] transition-all hover:opacity-95"
                     >
                       {loading ? "Mendaftar..." : "Buat Akun"}
                     </button>
@@ -451,7 +451,7 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
                       <button
                         type="button"
                         onClick={() => switchTab("login")}
-                        className="text-green-500 hover:text-green-400 underline-offset-2 hover:underline"
+                        className="text-[var(--app-accent)] hover:opacity-90 underline-offset-2 hover:underline"
                       >
                         Masuk di sini
                       </button>
