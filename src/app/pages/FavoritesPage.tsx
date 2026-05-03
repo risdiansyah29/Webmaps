@@ -164,7 +164,10 @@ export default function FavoritesPage() {
         isDark={true}
         initialTab="login"
         onClose={() => setAuthOpen(false)}
-        onLogin={(u) => setCurrentUser(u)}
+        onLogin={(u) => {
+          setCurrentUser(u);
+          nav("/map");
+        }}
       />
     </>
   );

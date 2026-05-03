@@ -178,7 +178,8 @@ export function AuthModal({ open, isDark, initialTab = "login", onClose, onLogin
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin
+        // Always redirect back to the current origin (dev stays dev, prod stays prod).
+        redirectTo: `${window.location.origin}/map`
       }
     });
     if (error) setError(error.message);

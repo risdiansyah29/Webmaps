@@ -682,7 +682,10 @@ export default function MapPage() {
         isDark={isDark}
         initialTab="login"
         onClose={() => setAuthOpen(false)}
-        onLogin={(user) => setCurrentUser(user)}
+        onLogin={(user) => {
+          setCurrentUser(user);
+          nav("/map");
+        }}
       />
 
       <AddPlaceModal
