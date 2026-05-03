@@ -1,6 +1,6 @@
 /* ─── Base font ─────────────────────────────────────────────────────────────── */
 html, body {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 /* ─── Smooth scrolling & selection color ────────────────────────────────────── */

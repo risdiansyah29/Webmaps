@@ -173,9 +173,9 @@ export function MapView({ places, selected, onSelect, isDark, userLoc, onLocate,
           title={locating ? "Mencari lokasi…" : userLoc ? "Perbarui lokasi" : "Lokasi saat ini"}
           className={`absolute bottom-5 right-5 w-12 h-12 rounded-full backdrop-blur-md shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 z-[400] disabled:cursor-wait disabled:hover:scale-100 ${
             userLoc
-              ? "bg-blue-600 text-white border border-blue-500 shadow-blue-500/30"
+              ? "bg-[#7fffd4] text-[#0b0f14] border border-transparent shadow-black/20"
               : isDark
-                ? "bg-neutral-900/90 text-blue-400 border border-neutral-700"
+                ? "bg-[rgba(17,22,29,0.85)] text-white/85 border border-white/10"
                 : "bg-white/95 text-blue-600 border border-neutral-200"
           }`}
         >

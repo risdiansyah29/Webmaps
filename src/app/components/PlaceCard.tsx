@@ -16,7 +16,7 @@ export function PlaceCard({ place, isFavorite, onToggleFavorite, onSelect }: Pro
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="bg-white dark:bg-neutral-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-green-500/10 cursor-pointer border border-neutral-100 dark:border-neutral-700 transition-shadow"
+      className="bg-white dark:bg-[#11161d] rounded-2xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer border border-neutral-100 dark:border-white/10 transition-shadow"
       onClick={() => onSelect(place)}
     >
       <div className="relative h-40 overflow-hidden">
@@ -27,11 +27,11 @@ export function PlaceCard({ place, isFavorite, onToggleFavorite, onSelect }: Pro
         />
         <button
           onClick={(e) => { e.stopPropagation(); onToggleFavorite(place.id); }}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 dark:bg-neutral-900/80 backdrop-blur-md flex items-center justify-center hover:bg-white dark:hover:bg-neutral-900 transition-colors shadow-md"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 dark:bg-[rgba(11,15,20,0.65)] border border-transparent dark:border-white/10 backdrop-blur-md flex items-center justify-center hover:bg-white dark:hover:bg-[rgba(11,15,20,0.82)] transition-colors shadow-md"
           aria-label="Toggle favorite"
         >
           <Heart
-            className={`w-5 h-5 transition-colors ${isFavorite ? "fill-orange-500 text-orange-500" : "text-neutral-600"}`}
+            className={`w-5 h-5 transition-colors ${isFavorite ? "fill-orange-500 text-orange-500" : "text-neutral-700 dark:text-white/70"}`}
           />
         </button>
         <span
@@ -43,17 +43,17 @@ export function PlaceCard({ place, isFavorite, onToggleFavorite, onSelect }: Pro
       </div>
       <div className="p-4">
         <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className="text-neutral-900 dark:text-neutral-100 line-clamp-1">{place.name}</h3>
+          <h3 className="text-neutral-900 dark:text-white/90 line-clamp-1">{place.name}</h3>
           <div className="flex items-center gap-1 shrink-0 text-orange-500">
             <Star className="w-4 h-4 fill-orange-500" />
             <span className="text-sm">{place.rating}</span>
           </div>
         </div>
-        <div className="flex items-center gap-1 text-neutral-500 dark:text-neutral-400 text-sm mb-2">
+        <div className="flex items-center gap-1 text-neutral-500 dark:text-white/55 text-sm mb-2">
           <MapPin className="w-3.5 h-3.5" />
           <span className="line-clamp-1">{place.region}</span>
         </div>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300 line-clamp-2">{place.description}</p>
+        <p className="text-sm text-neutral-600 dark:text-white/65 line-clamp-2">{place.description}</p>
       </div>
     </motion.div>
   );
