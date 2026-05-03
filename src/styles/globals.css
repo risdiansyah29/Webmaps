@@ -3,6 +3,29 @@ html, body {
   font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
+/* ─── App Palette (single source of truth for UI colors) ───────────────────── */
+:root {
+  --app-bg: #ffffff;
+  --app-surface: #ffffff;
+  --app-surface-2: #f5f7fb;
+  --app-border: rgba(0, 0, 0, 0.12);
+  --app-text: rgba(17, 24, 39, 0.95);
+  --app-text-muted: rgba(17, 24, 39, 0.6);
+  --app-accent: #22c55e;
+  --app-accent-fg: #0b0f14;
+}
+
+.dark {
+  --app-bg: #0b0f14;
+  --app-surface: #11161d;
+  --app-surface-2: rgba(17, 22, 29, 0.8);
+  --app-border: rgba(255, 255, 255, 0.1);
+  --app-text: rgba(255, 255, 255, 0.92);
+  --app-text-muted: rgba(255, 255, 255, 0.55);
+  --app-accent: #7fffd4;
+  --app-accent-fg: #0b0f14;
+}
+
 /* ─── Smooth scrolling & selection color ────────────────────────────────────── */
 html {
   scroll-behavior: smooth;

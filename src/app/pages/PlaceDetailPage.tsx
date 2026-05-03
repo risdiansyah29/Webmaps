@@ -4,6 +4,7 @@ import { CalendarDays, ChevronLeft, Heart, MapPin, Share2, Star, Users } from "l
 import { supabase } from "../../lib/supabaseClient";
 import type { Place } from "../data/places";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useTheme } from "../layout/AppShell";
 
 type Review = {
   id: string;
@@ -28,17 +29,11 @@ function fmtDate(iso: string) {
 export default function PlaceDetailPage() {
   const nav = useNavigate();
   const { id } = useParams();
+  const { isDark } = useTheme();
 
-  const [isDark, setIsDark] = useState(true);
   const [place, setPlace] = useState<Place | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  useEffect(() => {
-    const t = localStorage.getItem("theme");
-    if (t === "light") setIsDark(false);
-    else setIsDark(true);
-  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -74,36 +69,41 @@ export default function PlaceDetailPage() {
   }, [place]);
 
   return (
-    <div className={clsx(isDark ? "dark" : "", "min-h-screen w-screen bg-[#0b0f14] text-white")}>
-      <header className="sticky top-0 z-[800] border-b border-white/10 bg-[rgba(11,15,20,0.9)] backdrop-blur-md">
-        <div className="mx-auto max-w-[1280px] px-6 py-4 flex items-center gap-4">
+      <main className="mx-auto max-w-[1280px] px-6 py-8">
+        <div className="flex items-center gap-3 mb-6">
           <button
             onClick={() => nav(-1)}
-            className="w-10 h-10 rounded-full bg-[#11161d] border border-white/10 flex items-center justify-center text-white/80 hover:text-white"
+            className={clsx(
+              "w-10 h-10 rounded-full border flex items-center justify-center",
+              isDark ? "bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text-muted)] hover:text-[var(--app-text)]" : "bg-white border-neutral-200",
+            )}
             aria-label="Back"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <div className="font-semibold text-white/90 truncate">{place?.name ?? "Loading…"}</div>
-          <div className="ml-auto flex items-center gap-3">
+          <div className="font-semibold truncate">{place?.name ?? "Loading…"}</div>
+          <div className="ml-auto flex items-center gap-2">
             <button
               onClick={() => setIsFavorite((v) => !v)}
-              className="w-10 h-10 rounded-full bg-[#11161d] border border-white/10 flex items-center justify-center text-white/80 hover:text-white"
+              className={clsx(
+                "w-10 h-10 rounded-full border flex items-center justify-center",
+                isDark ? "bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text-muted)] hover:text-[var(--app-text)]" : "bg-white border-neutral-200",
+              )}
               aria-label="Save"
             >
               <Heart className={clsx("w-5 h-5", isFavorite ? "fill-orange-500 text-orange-500" : "")} />
             </button>
             <button
-              className="w-10 h-10 rounded-full bg-[#11161d] border border-white/10 flex items-center justify-center text-white/80 hover:text-white"
+              className={clsx(
+                "w-10 h-10 rounded-full border flex items-center justify-center",
+                isDark ? "bg-[var(--app-surface)] border-[var(--app-border)] text-[var(--app-text-muted)] hover:text-[var(--app-text)]" : "bg-white border-neutral-200",
+              )}
               aria-label="Share"
             >
               <Share2 className="w-5 h-5" />
             </button>
           </div>
         </div>
-      </header>
-
-      <main className="mx-auto max-w-[1280px] px-6 py-8">
         {/* Gallery */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-4">
           <div className="rounded-3xl overflow-hidden border border-white/10 bg-[#11161d]">
@@ -272,7 +272,5 @@ export default function PlaceDetailPage() {
           </aside>
         </div>
       </main>
-    </div>
   );
 }
-

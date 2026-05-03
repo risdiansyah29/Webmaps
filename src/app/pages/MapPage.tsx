@@ -1,17 +1,17 @@
 import { AddPlaceModal } from "../components/AddPlaceModal";
 import { AuthModal, type AuthUser } from "../components/AuthModal";
-import { UserMenu } from "../components/UserMenu";
 import { supabase } from "../../lib/supabaseClient";
 
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import { Heart, MapPin, Search, Sparkles, Menu, X, Sun, Moon, Plus, Star, LogIn, Bell } from "lucide-react";
+import { Heart, MapPin, Search, Sparkles, X, Star } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { CATEGORY_META, type Category, type Place } from "../data/places";
 import { MapView } from "../components/MapView";
 import { PlaceCard } from "../components/PlaceCard";
 import { type Review } from "../components/PlaceDetail";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useTheme } from "../layout/AppShell";
 
 const CATEGORIES: Category[] = ["nature", "cultural", "traditional", "modern"];
 
@@ -29,6 +29,7 @@ function distanceKm(a: { lat: number; lng: number }, b: { lat: number; lng: numb
 export default function MapPage() {
   const nav = useNavigate();
   const [sp, setSp] = useSearchParams();
+  const { isDark } = useTheme();
   // UI / filter state
   const [activeCategories, setActiveCategories] = useState<Set<Category>>(new Set(CATEGORIES));
   const [search, setSearch] = useState("");
@@ -37,7 +38,6 @@ export default function MapPage() {
   const [showFavorites, setShowFavorites] = useState(false);
   const [userLoc, setUserLoc] = useState<{ lat: number; lng: number } | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
   const [minRating, setMinRating] = useState(0);
   const [allPlaces, setAllPlaces] = useState<Place[]>([]);
   const [reviews, setReviews] = useState<Record<string, Review[]>>({});
@@ -47,22 +47,10 @@ export default function MapPage() {
   // Auth state
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [authOpen, setAuthOpen] = useState(false);
-  const [authTab, setAuthTab] = useState<"login" | "register">("login");
 
   // Location state
   const [locating, setLocating] = useState(false);
   const [locationToast, setLocationToast] = useState<{ type: "error" | "success"; msg: string } | null>(null);
-
-  // Restore theme preference from localStorage (default: dark to match Figma)
-  useEffect(() => {
-    const t = localStorage.getItem("theme");
-    if (t === "dark") setIsDark(true);
-    else if (t === "light") setIsDark(false);
-    else setIsDark(true);
-  }, []);
-  useEffect(() => {
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  }, [isDark]);
 
   // Seed initial search from URL (e.g. /map?q=...)
   useEffect(() => {
@@ -380,210 +368,8 @@ export default function MapPage() {
     setLocationToast(null);
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut(); // Menghapus sesi di database
-    localStorage.removeItem("jn_session"); // Opsional, membersihkan sisa data lama
-    setCurrentUser(null);
-  };
-
-  const openLogin = () => { setAuthTab("login"); setAuthOpen(true); };
-  const openRegister = () => { setAuthTab("register"); setAuthOpen(true); };
-
   return (
-    <div className={`${isDark ? "dark" : ""} h-screen w-screen flex flex-col overflow-hidden transition-colors ${isDark ? "bg-[#0b0f14]" : "bg-neutral-50"}`}>
-      {/* HEADER */}
-      <header
-        className={`px-4 md:px-6 py-4 flex items-center gap-3 shrink-0 z-[500] border-b backdrop-blur-md transition-colors ${
-          isDark ? "bg-[rgba(11,15,20,0.9)] border-white/10" : "bg-white/80 border-neutral-200/70"
-        }`}
-      >
-        <div className="flex items-center gap-2.5 shrink-0">
-          <div
-            className={`w-10 h-10 rounded-2xl flex items-center justify-center ring-1 ${
-              isDark
-                ? "bg-[#11161d] text-white ring-white/10"
-                : "bg-gradient-to-br from-green-400 via-green-600 to-emerald-700 text-white ring-white/20 shadow-lg shadow-green-500/20"
-            }`}
-          >
-            <MapPin className="w-5 h-5" />
-          </div>
-          <div className="hidden sm:block leading-none">
-            <div className={`font-bold tracking-[-0.5px] ${isDark ? "text-white" : "text-neutral-900"}`}>PointInterest</div>
-            <div className={`text-xs mt-1 ${isDark ? "text-white/55" : "text-neutral-500"}`}>Temukan tempat menarik</div>
-          </div>
-        </div>
-
-        {/* Segmented search (Figma-style) */}
-        <div
-          className={`hidden md:flex items-center relative rounded-full border shrink-0 ${
-            isDark ? "bg-[#11161d] border-white/10" : "bg-white border-neutral-200"
-          }`}
-        >
-          <div className={`flex items-center rounded-l-full border-r ${isDark ? "border-white/10" : "border-neutral-200"}`}>
-            <div className="px-5 py-3">
-              <div className={`text-[11px] font-semibold tracking-[0.6px] ${isDark ? "text-white/80" : "text-neutral-700"}`}>
-                Location
-              </div>
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search places"
-                className={`mt-1 bg-transparent outline-none text-sm w-[220px] ${
-                  isDark ? "text-white placeholder:text-white/40" : "text-neutral-900 placeholder:text-neutral-400"
-                }`}
-              />
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setShowFavorites(false)}
-            className={`px-6 py-5 border-r text-[11px] font-semibold tracking-[0.6px] ${
-              isDark ? "border-white/10 text-white/80 hover:text-white" : "border-neutral-200 text-neutral-600"
-            }`}
-            title="Category"
-          >
-            Category
-          </button>
-          <button
-            type="button"
-            onClick={() => setMinRating(0)}
-            className={`px-6 py-5 text-[11px] font-semibold tracking-[0.6px] ${
-              isDark ? "text-white/80 hover:text-white" : "text-neutral-600"
-            }`}
-            title="Date"
-          >
-            Date
-          </button>
-          <button
-            type="button"
-            onClick={() => setSidebarOpen(true)}
-            className={`m-1.5 w-10 h-10 rounded-full flex items-center justify-center border transition-colors ${
-              isDark
-                ? "bg-[#7fffd4] text-[#0b0f14] border-transparent hover:bg-[#8fffe0]"
-                : "bg-green-600 hover:bg-green-700 text-white border-transparent"
-            }`}
-            aria-label="Explore"
-          >
-            <Search className="w-4 h-4" />
-          </button>
-        </div>
-
-        <nav className="hidden lg:flex items-center gap-8 ml-auto shrink-0">
-          <button
-            type="button"
-            onClick={() => setShowFavorites(false)}
-            className={`text-xs tracking-[0.6px] font-semibold ${isDark ? "text-white/70 hover:text-white" : "text-neutral-600 hover:text-neutral-900"}`}
-          >
-            Discover
-          </button>
-          <button
-            type="button"
-            onClick={() => setSidebarOpen(true)}
-            className={`text-xs tracking-[0.6px] font-semibold ${isDark ? "text-white/70 hover:text-white" : "text-neutral-600 hover:text-neutral-900"}`}
-          >
-            Reservations
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowFavorites(true)}
-            className={`text-xs tracking-[0.6px] font-semibold ${isDark ? "text-white/70 hover:text-white" : "text-neutral-600 hover:text-neutral-900"}`}
-          >
-            Favorites
-          </button>
-        </nav>
-
-        {/* Add new place */}
-        <button
-          onClick={() => {
-            if (!currentUser) {
-              setAuthOpen(true); // Buka login jika belum masuk
-            } else {
-              setAddOpen(true);  // Buka modal tambah tempat jika sudah login
-            }
-          }}
-          aria-label="Add new place"
-          className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-sm shrink-0 ${
-            isDark ? "bg-[#11161d] border border-white/10 text-white hover:bg-[#151c25]" : "bg-green-600 hover:bg-green-700 text-white"
-          }`}
-        >
-          <Plus className="w-5 h-5" />
-        </button>
-
-        {/* Notification bell (visual parity with Figma) */}
-        <button
-          type="button"
-          aria-label="Notifications"
-          className={`hidden md:flex w-10 h-10 rounded-full items-center justify-center transition-colors shrink-0 ${
-            isDark ? "bg-[#11161d] border border-white/10 text-white/80 hover:text-white" : "bg-white border border-neutral-200 text-neutral-700"
-          }`}
-        >
-          <Bell className="w-5 h-5" />
-        </button>
-
-        {/* Day/Night toggle */}
-        <button
-          onClick={() => setIsDark((v) => !v)}
-          aria-label="Toggle day/night mode"
-          className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
-            isDark
-              ? "bg-[#11161d] border-white/10 text-white/80 hover:text-white"
-              : "bg-white border-neutral-200 text-neutral-700 hover:border-neutral-400"
-          }`}
-        >
-          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-        </button>
-
-        <button
-          onClick={() => setShowFavorites((v) => !v)}
-          className={`hidden md:flex items-center gap-1.5 px-4 py-2 rounded-full border transition-colors text-sm ${
-            showFavorites
-              ? "bg-orange-500 text-white border-orange-500"
-              : isDark
-                ? "bg-[#11161d] text-white/80 border-white/10 hover:text-white"
-                : "bg-white text-neutral-700 border-neutral-200 hover:border-orange-400"
-          }`}
-        >
-          <Heart className={`w-4 h-4 ${showFavorites ? "fill-white" : ""}`} />
-          {favorites.size}
-        </button>
-
-        {/* Auth area */}
-        {currentUser ? (
-          <UserMenu
-            user={currentUser}
-            isDark={isDark}
-            favoritesCount={favorites.size}
-            placesCount={userPlaces.length} // Mengambil data dari state userPlaces yang sudah kita siapkan
-            onLogout={handleLogout}
-          />
-        ) : (
-          <div className="hidden md:flex items-center gap-2">
-            <button
-              onClick={openLogin}
-              className={`px-4 py-2 rounded-full border text-sm transition-colors ${
-                isDark
-                  ? "border-neutral-700 text-neutral-200 hover:border-green-500 hover:text-green-400"
-                  : "border-neutral-200 text-neutral-700 hover:border-green-500 hover:text-green-600"
-              }`}
-            >
-              Masuk
-            </button>
-            <button
-              onClick={openRegister}
-              className="px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm hover:shadow-lg hover:shadow-green-500/25 transition-all hover:scale-105 active:scale-95"
-            >
-              Daftar
-            </button>
-          </div>
-        )}
-
-        <button
-          onClick={() => setSidebarOpen((v) => !v)}
-          className={`md:hidden w-10 h-10 rounded-full border flex items-center justify-center ${isDark ? "border-neutral-700 text-neutral-200" : "border-neutral-200"}`}
-        >
-          {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
-      </header>
+    <div className="h-[calc(100vh-72px)] w-screen flex flex-col overflow-hidden">
 
       {/* Mobile search (keeps core workflow available on small screens) */}
       <div className={`md:hidden px-4 py-3 shrink-0 border-b ${isDark ? "bg-[rgba(11,15,20,0.7)] border-white/10" : "bg-white/70 border-neutral-200/70"}`}>
@@ -599,32 +385,6 @@ export default function MapPage() {
           />
         </div>
       </div>
-
-      {/* Mobile auth button strip (shown only when no user + mobile) */}
-      {!currentUser && (
-        <div className={`md:hidden flex gap-2 px-4 py-2 shrink-0 border-b ${isDark ? "bg-[rgba(11,15,20,0.7)] border-white/10" : "bg-white/70 border-neutral-200/70"}`}>
-          <button
-            onClick={openLogin}
-            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full border text-sm transition-colors ${
-              isDark ? "bg-[#11161d] border-white/10 text-white/80" : "border-neutral-200 text-neutral-600"
-            }`}
-          >
-            <LogIn className="w-3.5 h-3.5" />
-            Masuk
-          </button>
-          <button
-            onClick={openRegister}
-            className="px-4 py-1.5 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm"
-          >
-            Daftar Gratis
-          </button>
-          {currentUser === null && (
-            <p className={`ml-auto self-center text-xs ${isDark ? "text-neutral-500" : "text-neutral-400"}`}>
-              Masuk untuk menyimpan favorit
-            </p>
-          )}
-        </div>
-      )}
 
       {/* CATEGORY + RATING FILTER STRIP */}
       <div className={`px-4 md:px-6 py-3 flex gap-2 overflow-x-auto shrink-0 border-b backdrop-blur-xl transition-colors items-center ${isDark ? "bg-[rgba(11,15,20,0.7)] border-white/10" : "bg-white/70 border-neutral-200/70"}`}>
@@ -917,68 +677,10 @@ export default function MapPage() {
         )}
       </AnimatePresence>
 
-      {/* Bottom navigation (mobile, Figma-style shell) */}
-      <div
-        className={`md:hidden fixed bottom-0 left-0 right-0 z-[700] px-4 pb-4 pointer-events-none`}
-      >
-        <div
-          className={`pointer-events-auto mx-auto w-full max-w-md rounded-3xl border backdrop-blur-md px-6 py-3 flex items-center justify-between ${
-            isDark ? "bg-[rgba(11,15,20,0.9)] border-white/10 text-white" : "bg-white border-neutral-200 text-neutral-900"
-          }`}
-        >
-          <button
-            type="button"
-            onClick={() => { setShowFavorites(false); setSidebarOpen(true); }}
-            className={`flex flex-col items-center gap-1 text-[10px] font-semibold tracking-[0.4px] w-16 ${
-              isDark ? "text-white/75" : "text-neutral-600"
-            }`}
-          >
-            <Search className="w-5 h-5" />
-            Discover
-          </button>
-          <button
-            type="button"
-            onClick={() => { setShowFavorites(true); setSidebarOpen(true); }}
-            className={`flex flex-col items-center gap-1 text-[10px] font-semibold tracking-[0.4px] w-16 ${
-              showFavorites ? (isDark ? "text-[#7fffd4]" : "text-green-700") : isDark ? "text-white/75" : "text-neutral-600"
-            }`}
-          >
-            <Heart className={`w-5 h-5 ${showFavorites ? "fill-current" : ""}`} />
-            Fav
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              if (!currentUser) setAuthOpen(true);
-              else setAddOpen(true);
-            }}
-            className={`flex flex-col items-center gap-1 text-[10px] font-semibold tracking-[0.4px] w-16 ${
-              isDark ? "text-white/75" : "text-neutral-600"
-            }`}
-          >
-            <Plus className="w-5 h-5" />
-            Add
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              if (!currentUser) setAuthOpen(true);
-              else setSidebarOpen(true);
-            }}
-            className={`flex flex-col items-center gap-1 text-[10px] font-semibold tracking-[0.4px] w-16 ${
-              isDark ? "text-white/75" : "text-neutral-600"
-            }`}
-          >
-            <MapPin className="w-5 h-5" />
-            Profile
-          </button>
-        </div>
-      </div>
-
       <AuthModal
         open={authOpen}
         isDark={isDark}
-        initialTab={authTab}
+        initialTab="login"
         onClose={() => setAuthOpen(false)}
         onLogin={(user) => setCurrentUser(user)}
       />

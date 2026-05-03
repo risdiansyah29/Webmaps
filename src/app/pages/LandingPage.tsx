@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
-import { Bell, ChevronRight, Heart, MapPin, Moon, Search, Sun } from "lucide-react";
+import { ChevronRight, Heart, MapPin, Search } from "lucide-react";
 import { supabase } from "../../lib/supabaseClient";
 import type { Place } from "../data/places";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
@@ -17,20 +17,9 @@ function clsx(...parts: Array<string | false | null | undefined>) {
 export default function LandingPage() {
   const nav = useNavigate();
 
-  const [isDark, setIsDark] = useState(true);
   const [searchWhere, setSearchWhere] = useState("");
   const [searchType, setSearchType] = useState("");
   const [allPlaces, setAllPlaces] = useState<Place[]>([]);
-
-  useEffect(() => {
-    const t = localStorage.getItem("theme");
-    if (t === "light") setIsDark(false);
-    else setIsDark(true);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  }, [isDark]);
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -70,100 +59,44 @@ export default function LandingPage() {
   };
 
   return (
-    <div className={clsx(isDark ? "dark" : "", "min-h-screen w-screen bg-[#0b0f14] text-white")}>
-      <header className="sticky top-0 z-[800] w-full border-b border-white/10 bg-[rgba(11,15,20,0.9)] backdrop-blur-md">
-        <div className="mx-auto w-full max-w-[1280px] px-6 py-4 flex items-center gap-4">
-          <div className="flex items-center gap-2 shrink-0">
-            <div className="text-white font-bold tracking-[-0.5px]">CulinaryElite</div>
-          </div>
-
-          <div className="hidden md:flex items-center rounded-full border border-white/10 bg-[#11161d] overflow-hidden">
-            <button className="px-6 py-3 text-[11px] font-semibold tracking-[0.6px] text-white/80 border-r border-white/10">
-              Location
-            </button>
-            <button className="px-6 py-3 text-[11px] font-semibold tracking-[0.6px] text-white/80 border-r border-white/10">
-              Category
-            </button>
-            <button className="px-6 py-3 text-[11px] font-semibold tracking-[0.6px] text-white/80">
-              Date
-            </button>
-            <button
-              onClick={goMap}
-              className="m-1.5 w-10 h-10 rounded-full bg-[#7fffd4] text-[#0b0f14] flex items-center justify-center"
-              aria-label="Explore"
-            >
-              <Search className="w-4 h-4" />
-            </button>
-          </div>
-
-          <nav className="hidden lg:flex items-center gap-8 ml-auto">
-            <button className="text-xs tracking-[0.6px] font-semibold text-[#7fffd4]">Discover</button>
-            <button className="text-xs tracking-[0.6px] font-semibold text-white/70 hover:text-white">Reservations</button>
-            <button
-              onClick={() => nav("/map")}
-              className="text-xs tracking-[0.6px] font-semibold text-white/70 hover:text-white"
-            >
-              Favorites
-            </button>
-          </nav>
-
-          <div className="ml-auto lg:ml-0 flex items-center gap-3 shrink-0">
-            <button
-              className="hidden md:flex w-10 h-10 rounded-full items-center justify-center bg-[#11161d] border border-white/10 text-white/80 hover:text-white"
-              aria-label="Notifications"
-            >
-              <Bell className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setIsDark((v) => !v)}
-              className="w-10 h-10 rounded-full items-center justify-center bg-[#11161d] border border-white/10 text-white/80 hover:text-white flex"
-              aria-label="Toggle theme"
-            >
-              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-orange-400 to-cyan-500 ring-2 ring-white/10" />
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto w-full max-w-[1280px] px-6">
+    <main className="mx-auto w-full max-w-[1280px] px-6">
         {/* Hero */}
         <section className="pt-10">
           <div className="relative overflow-hidden rounded-[28px] border border-white/10">
             <div className="absolute inset-0">
               <ImageWithFallback src={HERO_BG} alt="" className="w-full h-full object-cover opacity-70" />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(11,15,20,0.45)] to-[#0b0f14]" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-[var(--app-bg)]" />
             </div>
 
             <div className="relative px-6 md:px-10 py-16 md:py-20 flex flex-col items-center text-center">
-              <h1 className="text-3xl md:text-5xl font-bold tracking-[-1px] text-white">
+              <h1 className="text-3xl md:text-5xl font-bold tracking-[-1px] text-[var(--app-text)]">
                 Find places worth going.
               </h1>
 
-              <div className="mt-8 w-full max-w-[720px] rounded-[28px] border border-white/10 bg-[#11161d]/80 backdrop-blur-md overflow-hidden shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.25)]">
+              <div className="mt-8 w-full max-w-[720px] rounded-[28px] border border-[var(--app-border)] bg-[var(--app-surface-2)] backdrop-blur-md overflow-hidden shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.25)]">
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto]">
-                  <div className="px-6 py-5 border-b md:border-b-0 md:border-r border-white/10 text-left">
-                    <div className="text-[10px] font-semibold tracking-[0.6px] text-white/60">WHERE</div>
+                  <div className="px-6 py-5 border-b md:border-b-0 md:border-r border-[var(--app-border)] text-left">
+                    <div className="text-[10px] font-semibold tracking-[0.6px] text-[var(--app-text-muted)]">WHERE</div>
                     <input
                       value={searchWhere}
                       onChange={(e) => setSearchWhere(e.target.value)}
                       placeholder="Search destinations"
-                      className="mt-1 w-full bg-transparent outline-none text-sm text-white placeholder:text-white/35"
+                      className="mt-1 w-full bg-transparent outline-none text-sm text-[var(--app-text)] placeholder:text-[var(--app-text-muted)]"
                     />
                   </div>
-                  <div className="px-6 py-5 border-b md:border-b-0 md:border-r border-white/10 text-left">
-                    <div className="text-[10px] font-semibold tracking-[0.6px] text-white/60">TYPE</div>
+                  <div className="px-6 py-5 border-b md:border-b-0 md:border-r border-[var(--app-border)] text-left">
+                    <div className="text-[10px] font-semibold tracking-[0.6px] text-[var(--app-text-muted)]">TYPE</div>
                     <input
                       value={searchType}
                       onChange={(e) => setSearchType(e.target.value)}
                       placeholder="What's the vibe?"
-                      className="mt-1 w-full bg-transparent outline-none text-sm text-white placeholder:text-white/35"
+                      className="mt-1 w-full bg-transparent outline-none text-sm text-[var(--app-text)] placeholder:text-[var(--app-text-muted)]"
                     />
                   </div>
                   <div className="p-3 flex items-center justify-center">
                     <button
                       onClick={goMap}
-                      className="w-full md:w-auto px-7 py-4 rounded-full bg-[#7fffd4] text-[#0b0f14] font-semibold text-sm flex items-center justify-center gap-2"
+                      className="w-full md:w-auto px-7 py-4 rounded-full bg-[var(--app-accent)] text-[var(--app-accent-fg)] font-semibold text-sm flex items-center justify-center gap-2"
                     >
                       <Search className="w-4 h-4" />
                       Explore
@@ -185,8 +118,8 @@ export default function LandingPage() {
                     className={clsx(
                       "px-5 py-2.5 rounded-full border text-xs font-semibold tracking-[0.2px] flex items-center gap-2",
                       x.label === "Restaurant"
-                        ? "bg-white text-[#0b0f14] border-white/10"
-                        : "bg-[#11161d]/40 text-white/70 border-white/10 hover:text-white"
+                        ? "bg-[var(--app-text)] text-[var(--app-bg)] border-[var(--app-border)]"
+                        : "bg-[var(--app-surface-2)] text-[var(--app-text-muted)] border-[var(--app-border)] hover:text-[var(--app-text)]"
                     )}
                   >
                     <x.icon className="w-4 h-4 opacity-80" />
@@ -202,12 +135,12 @@ export default function LandingPage() {
         <section className="pt-12">
           <div className="flex items-end justify-between">
             <div>
-              <div className="text-lg font-semibold text-white">Editor's Choice</div>
-              <div className="text-xs text-white/45 mt-1">
+              <div className="text-lg font-semibold text-[var(--app-text)]">Editor's Choice</div>
+              <div className="text-xs text-[var(--app-text-muted)] mt-1">
                 Hand-picked destinations with exceptional atmosphere.
               </div>
             </div>
-            <button className="text-xs font-semibold text-[#7fffd4] flex items-center gap-1">
+            <button className="text-xs font-semibold text-[var(--app-accent)] flex items-center gap-1">
               View all <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -221,17 +154,17 @@ export default function LandingPage() {
               >
                 <div className="relative h-44">
                   <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover" />
-                  <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-[rgba(11,15,20,0.6)] border border-white/10 flex items-center justify-center">
-                    <Heart className="w-4 h-4 text-white/70" />
+                  <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 border border-[var(--app-border)] flex items-center justify-center">
+                    <Heart className="w-4 h-4 text-[var(--app-text-muted)]" />
                   </div>
-                  <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-[rgba(11,15,20,0.6)] border border-white/10 text-[10px] font-semibold text-white/80">
+                  <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-black/40 border border-[var(--app-border)] text-[10px] font-semibold text-[var(--app-text-muted)]">
                     {p.category}
                   </div>
                 </div>
                 <div className="p-4">
-                  <div className="text-white/90 font-semibold truncate">{p.name}</div>
-                  <div className="mt-1 text-xs text-white/45 truncate">{p.region}</div>
-                  <div className="mt-2 text-xs text-white/70 truncate">{"$".repeat(3)} · {p.tags?.[0] ?? "Signature menu"}</div>
+                  <div className="text-[var(--app-text)] font-semibold truncate">{p.name}</div>
+                  <div className="mt-1 text-xs text-[var(--app-text-muted)] truncate">{p.region}</div>
+                  <div className="mt-2 text-xs text-[var(--app-text-muted)] truncate">{"$".repeat(3)} · {p.tags?.[0] ?? "Signature menu"}</div>
                 </div>
               </button>
             ))}
@@ -299,8 +232,7 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-      </main>
-    </div>
+    </main>
   );
 }
 
